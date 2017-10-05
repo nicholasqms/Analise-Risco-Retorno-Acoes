@@ -1,0 +1,6 @@
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\bin\Debug\YahooFinanceAPI.dll
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\bin\Debug\YahooFinanceAPI.pdb
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\obj\Debug\YahooFinanceAPI_CS.csprojResolveAssemblyReference.cache
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\obj\Debug\YahooFinanceAPI_CS.csproj.CoreCompileInputs.cache
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\obj\Debug\YahooFinanceAPI.dll
+C:\Users\nicho\Documents\Accenture\YahooFinanceAPI-develop\YahooFinanceAPI-develop\YahooFinanceAPI_CS\obj\Debug\YahooFinanceAPI.pdb

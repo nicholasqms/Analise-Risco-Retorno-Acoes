@@ -1,0 +1,43 @@
+﻿@model Analise_Acoes_NICHOLAS.Models.Company
+@{
+    ViewData["Title"] = "IndexSearch";
+}
+
+<head>
+    <title>Chart Example</title>
+    
+</head>
+
+<body>
+    
+@if (ViewBag.Symbol != null)
+{
+    <p2>
+        Valores de fechamento para a empresa @ViewBag.Symbol
+        
+    </p2>   
+}
+
+@*
+@foreach (var item2 in ViewBag.Price)
+    {
+    <p>@item2</p>
+}*@
+
+    @*@Html.DropDownList("ShowDropDown")*@
+    
+@{ 
+    var Lista = ViewBag.CompanyList;
+}
+    
+    <form asp-controller="CompanyList" asp-action="IndexSearch" asp-route-SearchSymbol=@Lista.SelectedValue>
+    <select asp-for="Nome" asp-items="Lista">
+        <option>Please select one</option>
+    </select>
+
+        @*<input type="text" name="SearchSymbol">*@
+    @*<button type="submit" value="SearchSymbol">Enviar</button>*@
+        <input type ="submit"/>
+    </form>
+    <a> Teste : @Lista.SelectedValue.ToString()</a>
+</body>
