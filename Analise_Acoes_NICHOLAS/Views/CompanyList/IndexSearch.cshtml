@@ -1,4 +1,4 @@
-﻿@model Analise_Acoes_NICHOLAS.Models.Company
+﻿@model Analise_Acoes_NICHOLAS.Models.CompanyListModel
 @{
     ViewData["Title"] = "IndexSearch";
 }
@@ -30,8 +30,8 @@
     var Lista = ViewBag.CompanyList;
 }
     
-    <form asp-controller="CompanyList" asp-action="IndexSearch" asp-route-SearchSymbol=@Lista.SelectedValue>
-    <select asp-for="Nome" asp-items="Lista">
+    <form asp-controller="CompanyList" asp-action="IndexSearch" asp-route-SearchSymbol=companySymbol>
+    <select asp-for="Sigla" asp-items="Lista">
         <option>Please select one</option>
     </select>
 

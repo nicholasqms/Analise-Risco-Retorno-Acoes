@@ -1,0 +1,44 @@
+﻿@model Analise_Acoes_NICHOLAS.Models.Closings
+@{
+    ViewData["Title"] = "SymbolEod";
+}
+
+<head>
+    <title>Symbol EOD</title>
+    
+</head>
+
+<body>
+@if (ViewBag.symbol != null)
+{
+    <p2>
+        Valores de fechamento para a empresa @ViewBag.Symbol
+
+    </p2>
+}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Valor
+                </th>
+                <th>
+                    Data
+                </th>
+            </tr>
+        </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Closings)
+    {
+        <tr>
+            <td>
+               @item.CloseValue
+            </td>
+            <td>
+                @item.Date
+            </td>
+        </tr>
+    }
+    </tbody>
+        </table>
+</body>

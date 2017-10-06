@@ -14,5 +14,7 @@ namespace Analise_Acoes_NICHOLAS.Models
         }
 
         public DbSet<Analise_Acoes_NICHOLAS.Models.Company> Company{ get; set; }
+        public DbSet<Analise_Acoes_NICHOLAS.Models.Company> CompanyListModel { get; set; }
+
     }
 }

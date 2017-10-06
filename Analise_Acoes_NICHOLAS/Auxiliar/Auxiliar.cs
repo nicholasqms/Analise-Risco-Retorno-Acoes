@@ -8,7 +8,7 @@ using Analise_Acoes_NICHOLAS.Models;
 using YahooFinanceAPI;
 
 namespace Analise_Acoes_NICHOLAS.Auxiliar
-{   
+{            
     static class list_of_companies
     {
         public const string filename = "companylist.csv";
@@ -33,6 +33,18 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
         }
         return lista;
     }
+    
+
+    public List<string> CarregaSiglas (string filename)
+        {
+            List<string> lista_siglas = new List<string>();
+            
+            lista_siglas = ObtainFirstColumn(filename, 0);
+            
+            
+            return lista_siglas;
+        }
+
      public List<Company> CarregaLista (string filename)
         {
             List<string> lista_siglas = new List<string>();
@@ -47,7 +59,14 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
             List<Company> CompanyList = new List<Company> { };
             for (int i = 1; i < lista_siglas.Count; i++)
             {
-                CompanyList.Add(new Company(i, lista_siglas[i], lista_Nomes[i]));
+                CompanyList.Add(
+                    new Company(i, lista_siglas[i], lista_Nomes[i]));
+                    //{ 
+                    //    ID = i,
+                    //    Sigla = lista_siglas[i],
+                    //    Nome = lista_Nomes[i]
+                    //}
+                    //);
 
             }
             lista_Nomes.Clear();
@@ -71,6 +90,46 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
             }
             
             return Eod;
+
+
+        }
+        //public List<Double> CarregaFechamentoYahooPeriod(string symbol, int months)
+        //{
+        //    while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
+        //    {
+        //        Token.Refresh();
+        //    }
+
+        //    List<HistoryPrice> hps = Historical.Get(symbol, DateTime.Now.AddMonths(-(months)), DateTime.Now);
+        //    List<Double> Eod = new List<double> { };
+            
+        //    for (int i = 0; i < hps.Count; i++)
+        //    {
+        //        Eod.Add(hps[i].Close);
+        //    }
+
+        //    return Eod;
+
+
+        //}
+        public List<DateTime> CarregaDatasYahooPeriod(string symbol, int months)
+        {
+            while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
+            {
+                Token.Refresh();
+            }
+
+            List<HistoryPrice> hps = Historical.Get(symbol, DateTime.Now.AddMonths(-(months)), DateTime.Now);            
+            List<DateTime> Dates = new List<DateTime> { };
+
+            for (int i = 0; i < hps.Count; i++)
+            {
+                
+                Dates.Add(hps[i].Date);
+            }
+
+            
+            return Dates;
 
 
         }

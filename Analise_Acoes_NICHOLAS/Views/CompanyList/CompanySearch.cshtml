@@ -1,0 +1,28 @@
+﻿@model Analise_Acoes_NICHOLAS.Models.CompanyListModel
+@{
+    ViewData["Title"] = "IndexSearch";
+}
+<h2>Index</h2>
+
+<form asp-controller="CompanyList" asp-action="CompanySearch" method="get">
+    <p>
+        <select asp-for="Sigla" asp-items="@ViewBag.CompanyList">
+            <option value="">All</option>
+        </select>
+
+        Title: <input type="text" name="searchSymbol">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+                    @*@Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@

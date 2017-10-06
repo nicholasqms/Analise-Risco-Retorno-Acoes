@@ -9,6 +9,8 @@ namespace Analise_Acoes_NICHOLAS.Models
 {
     public class Company
     {
+        //public Company{}
+
         public Company(int i, string symbol, string name)
         {
             ID = i;

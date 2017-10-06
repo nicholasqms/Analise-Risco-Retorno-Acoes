@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Charts";
+}
+
+<h2>Index</h2>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                zoomEnabled: true,
+                title: {
+                    text: "@ViewBag.symbol"
+                },
+                axisY: {
+                    includeZero: false
+                },
+                data: [
+                    { type: "line" , dataPoints: @Html.Raw(ViewBag.DataPoints)}]  // random generator below
+            });
+            chart.render();
+
+        }
+
+    </script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 370px; width: 100%;">
+    </div>
+</body>
+</html>

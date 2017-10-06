@@ -8,8 +8,9 @@ namespace Analise_Acoes_NICHOLAS.Models
 {
     public class CompanyListModel
     {
-        public List<Company> companies;
-        public SelectList company_names;
-        public string companyName { get; set; }
+        public List<Company> CompanyList;
+        public SelectList SList;
+        public string companySymbol { get; set; }
+        public string Sigla;
     }
 }

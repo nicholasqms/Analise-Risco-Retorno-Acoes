@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "Charts";
+}
+
+<h2>Index</h2>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart Example</title>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
+            <body>
+                <div id="chartContainer"></div>
+                <script type="text/javascript">
+
+                    window.onload = function () {
+		var chart = new CanvasJS.Chart("chartContainer", {
+                        theme: "theme2",
+			animationEnabled: true,
+			title: {
+                        text: "@ViewBag.symbol" @*text:"Teste"*@
+			},
+			subtitles: [
+				{text: "" }
+			],
+			data: [
+			{
+                        type: "line", //change type to bar, line, area, pie, etc
+				dataPoints: @Html.Raw(ViewBag.DataPoints)
+			}
+            ],
+            options: {
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Day of Year'
+                        }
+                    }]
+                }
+            },
+		});
+		chart.render();
+	};
+    </script>
+</body>
+</html>
