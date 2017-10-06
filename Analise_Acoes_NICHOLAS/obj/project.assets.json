@@ -13144,11 +13144,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\nicho\\Documents\\Accenture\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS.csproj",
+      "projectUniqueName": "C:\\Users\\nicho\\Documents\\GitHub\\Analise-Risco-Retorno-Acoes\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS.csproj",
       "projectName": "Analise_Acoes_NICHOLAS",
-      "projectPath": "C:\\Users\\nicho\\Documents\\Accenture\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS.csproj",
+      "projectPath": "C:\\Users\\nicho\\Documents\\GitHub\\Analise-Risco-Retorno-Acoes\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS.csproj",
       "packagesPath": "C:\\Users\\nicho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nicho\\Documents\\Accenture\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\Analise_Acoes_NICHOLAS\\obj\\",
+      "outputPath": "C:\\Users\\nicho\\Documents\\GitHub\\Analise-Risco-Retorno-Acoes\\Analise_Acoes_NICHOLAS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
