@@ -38,6 +38,14 @@
             <td>
                 @item.Nome
             </td>
+            <td>
+                <form>
+                    <input type="hidden" name="Symbol" value="@item.Sigla"/> @*como defino esse input hidden?*@
+                    @*<input type="submit"/>*@
+                      Periodo: <input type="number" name="months">  @*esse input vai certo, como month=input*@
+        <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Sigla" @*asp-route-months="2"*@/></form>
+                @*<a asp-action="Charts" asp-route-Symbol="@item.Sigla" asp-route-months="period">Charts</a>*@
+            </td>
         </tr>
     }
     </tbody>

@@ -1,0 +1,5 @@
+C:\Users\nicho\Documents\Accenture\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\obj\Release\netcoreapp2.0\Analise_Acoes_NICHOLAS.csprojResolveAssemblyReference.cache
+C:\Users\nicho\Documents\Accenture\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\obj\Release\netcoreapp2.0\Analise_Acoes_NICHOLAS.csproj.CoreCompileInputs.cache
+C:\Users\nicho\Documents\Accenture\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\obj\Release\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\nicho\Documents\Accenture\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\obj\Release\netcoreapp2.0\Analise_Acoes_NICHOLAS.AssemblyInfoInputs.cache
+C:\Users\nicho\Documents\Accenture\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\Analise_Acoes_NICHOLAS\obj\Release\netcoreapp2.0\Analise_Acoes_NICHOLAS.AssemblyInfo.cs

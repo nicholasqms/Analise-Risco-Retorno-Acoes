@@ -124,8 +124,8 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
 
             for (int i = 0; i < hps.Count; i++)
             {
-                
                 Dates.Add(hps[i].Date);
+                //Dates.Add(hps[i].Date.ToString("yyyy,MM,dd");
             }
 
             

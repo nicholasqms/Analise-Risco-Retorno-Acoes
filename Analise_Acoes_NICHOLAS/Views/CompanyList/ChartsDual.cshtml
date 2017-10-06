@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewData["Title"] = "Charts";
+}
+
+<h2></h2>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                @*animationEnabled: true,
+                zoomEnabled: true,
+                title: {
+                    text: "@ViewBag.symbol1 x @ViewBag.symbol2"
+                },
+                axisY: {
+                    includeZero: false
+                },*@
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "@ViewBag.symbol1 x @ViewBag.symbol2"
+                },
+                axisX: {
+                    ValueFormatString: "DD MMM,YYYY",
+                    crosshair: {
+                        enabled: true,
+                        snapToDataPoint: true
+                    }
+                },
+                axisY: {
+                    title: "Value",
+                    crosshair: {
+                        enabled: true
+                    }
+                },
+                toolTip: {
+                    shared: true
+                },
+                legend: {
+                    cursor: "pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: true,
+                    itemclick: toogleDataSeries
+                },
+
+                data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "@ViewBag.symbol1",
+                    markerType: "square",
+                    xValueFormatString: "DD MMM, YYYY",
+                    color: "#F08080",
+                    dataPoints:
+                        [@Html.Raw(ViewBag.DataPoints1)]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: "@ViewBag.symbol2",
+                    lineDashType: "dash",
+                    xValueFormatString: "DD MMM, YYYY",
+                    dataPoints: [@Html.Raw(ViewBag.DataPoints2)]
+
+                }]
+                });
+            chart.render();
+            function toogleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
+            
+            //function formatJSONDate(jsonDate) {
+            //    var newDate = dateFormat(jsonDate, "mm/dd/yyyy");
+            //    return newDate;
+            //}
+
+            //function ConvertDate1 (@@ViewBag.DataPoints1)
+            //{ convert your model to a javascript array
+            //var model = @@Html.Raw(Json.Serialize(Model))*;
+            //var model = @@Html.Raw(Json.Serialize(ViewDataPoints_Date));
+            // initialise a new array
+            @*@var datapoints1 = [];
+            
+            @foreach (var item in @ViewBag.DataPoints1)
+            {
+                //{ x: new formatJSONDate(Date(@Html.Raw(item.X))), y: @Html.Raw(item.Y)},
+                datapoints1.push({ x: new Date(@item.X), y: @item.Y });
+            }
+            
+
+            // build an array of objects
+            @*$.each(model, function(index, item) {
+                datapoints.push({ x: new Date(@item.X), y: item.height });*@
+        //});
+        }
+
+    </script>
+   @* <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>*@
+    <script type="text/javascript" src="~/js/canvasjs-2.0-beta1/canvasjs.min.js"></script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 370px; width: 100%;">
+    </div>
+</body>
+</html>
