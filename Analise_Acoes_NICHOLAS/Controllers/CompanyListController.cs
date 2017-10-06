@@ -17,12 +17,12 @@ namespace Analise_Acoes_NICHOLAS.Controllers
     public class CompanyListController : Controller
     {
         private readonly Analise_AcoesContext _context;
-        // GET: /CompanyList/
+        //Context for the Project
         public CompanyListController(Analise_AcoesContext context)
         {
             _context = context;
         }
-
+        // GET: /CompanyList/
         public IActionResult Index()
         {
             Auxiliares auxiliar = new Auxiliares();
@@ -34,30 +34,29 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             return View();
         }
 
-        // GET */CompanyList/IndexSearch/
+        // GET */CompanyList/CompanySearch/
+        //Try to make dropdown menu with selector for Symbol visualization 
         public async Task<IActionResult> CompanySearch(string CSymbol, string searchSymbol)
         {
             Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
-
+            
             var CompanyListVM = new CompanyListModel();
             CompanyListVM.CompanyList = auxiliar.CarregaLista("companylist.csv");
             CompanyListVM.SList = new SelectList(CompanyListVM.CompanyList, "ID", "Sigla");
-            //CompanyListVM.SymbolList = auxiliar.CarregaSiglas("companylist.csv");
-            //teste
-            //SelectListItem Selecionado = Company_Listing.SelectedValue();
-
-
-            //List<Company> Company_Listing = auxiliar.CarregaLista("companylist.csv");
+            
+            //Creation of a Company instance
             Company Selecionado = CompanyListVM.CompanyList.Last();
+
+            //viewBag definitions
             ViewBag.symbol = Selecionado.Sigla;
             ViewBag.Price = auxiliar.CarregaDadosYahoo(Selecionado.Sigla);
             ViewBag.CompanyList = CompanyListVM.CompanyList;
-            //ViewBag.CompanyList = new SelectList(Company_Listing, "ID", "Sigla");           
-
+            
             return View(CompanyListVM);
 
         }
 
+        //Try to make dropdown menu with selector for Symbol visualization 
         public async Task<IActionResult> IndexSearch()
         {
             Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
@@ -83,6 +82,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             return View(Company_LM);
         }
 
+        //POST method to obtain the selection value
         [HttpPost]
         public IActionResult IndexSearchResult(string SearchSymbol)
         {
@@ -100,6 +100,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             return View("~/Views/CompanyList/IndexSearch.cshtml");
         }
 
+        //View to test the YahooAPI, printing a table with the close and the date values
         public async Task<IActionResult> SymbolEod(string Symbol, int months)
         {
             Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
@@ -115,8 +116,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
                 months = 1;
             }
 
-            var Company_LM = new CompanyListModel();
-            Company_LM.CompanyList = auxiliar.CarregaLista("companylist.csv");
             List<Double> Eod = auxiliar.CarregaDadosYahoo(Symbol);
             List < DateTime > Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
 
@@ -126,8 +125,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
                 ClosingList.Add(
                     new Closings(Eod[i], Dates[i]));
             }
-            //List<Company> Company_Listing = auxiliar.CarregaLista("companylist.csv");
-            //Company Selecionado = Company_Listing.Last();
             ViewBag.symbol = Symbol;
 
             ViewBag.Closings = ClosingList;
@@ -136,7 +133,8 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
         }
 
-        // GET: /Charts/
+        // GET Method to display the data in line chart model
+        // GET: /CompanyList/Charts/
         public IActionResult Charts(string Symbol, int months)
         {
             Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
@@ -158,7 +156,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             }
             ViewBag.symbol = Symbol;
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
-            return View("~/Views/CompanyList/Charts2.cshtml");
+            return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
         }
         
     }
