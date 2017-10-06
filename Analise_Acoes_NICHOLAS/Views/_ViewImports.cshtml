@@ -5,3 +5,7 @@
 @using Analise_Acoes_NICHOLAS.Models.ManageViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IJsonHelper Json;
+@using X.PagedList.Mvc; //import this so we get our HTML Helper
+@using X.PagedList; //import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)
+@*@using Microsoft.AspNetCore.Html;*@
+@using System.Web;

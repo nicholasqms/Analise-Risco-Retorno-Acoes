@@ -9,11 +9,25 @@ namespace Analise_Acoes_NICHOLAS.Models
 {
     public class Company
     {
-        //public Company{}
+        public Company(){}
 
         public Company(int i, string symbol, string name)
         {
             ID = i;
+            Sigla = symbol;
+            Nome = name;
+        }
+
+        //public Company(int i, string symbol, string name, string path)
+        //{
+        //    ID = i;
+        //    Sigla = symbol;
+        //    Nome = name;
+        //    GraphPath = path;
+        //}
+
+        public Company(string symbol, string name)
+        {
             Sigla = symbol;
             Nome = name;
         }
@@ -28,6 +42,10 @@ namespace Analise_Acoes_NICHOLAS.Models
 
         [Display(Name = "Nome")]
         public string Nome { get; set; }
+
+        //[Display(Name = "")]
+        //public string GraphPath { get; set; }
+
 
     }
 }

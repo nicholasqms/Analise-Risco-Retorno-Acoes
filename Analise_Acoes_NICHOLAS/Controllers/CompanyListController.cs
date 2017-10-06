@@ -12,6 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using X.PagedList;
+using X.PagedList.Mvc;
+using Microsoft.AspNetCore.Html;
+using System.Web;
 
 namespace Analise_Acoes_NICHOLAS.Controllers
 {
@@ -27,13 +31,49 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         public IActionResult Index()
         {
             Auxiliares auxiliar = new Auxiliares();
-
+            
+            List<Company> CompanyList = auxiliar.CarregaLista("companylist.csv");
+           
             ViewBag.Price = auxiliar.CarregaDadosYahoo("AAPL");
-            ViewBag.Company = auxiliar.CarregaLista("companylist.csv");
+            ViewBag.Company = CompanyList;
+            //ViewBag.Company = auxiliar.CarregaLista("companylist.csv");
             //ViewBag.ShowDropDown = new SelectList(auxiliar.CarregaLista("companylist.csv"), "ID", "Sigla", "Nome");
 
             return View();
         }
+
+
+        //// GET: /CompanyList/Buscacompany
+        public async Task<IActionResult> BuscaCompany(string companySymbol, string searchString)
+        {
+            // Use LINQ to get list of genres.
+            IQueryable<string> symbolQuery = from m in _context.Company
+                                             orderby m.Sigla
+                                             select m.Sigla;
+
+            var companies = from m in _context.Company
+                            select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                companies = companies.Where(s => s.Nome.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(companySymbol))
+            {
+                companies = companies.Where(x => x.Sigla == companySymbol);
+            }
+
+            var companySymbolVM = new CompanyListModel();
+            companySymbolVM.SList = new SelectList(await symbolQuery.Distinct().ToListAsync());
+            companySymbolVM.CompanyList = await companies.ToListAsync();
+            //ViewBag.CompanyList = JsonConvert.SerializeObject(auxiliar.CarregaListaPath("companylist.csv"),, new JavaScriptDateTimeConverter());
+            ViewBag.CompanyList = JsonConvert.SerializeObject(companySymbolVM.CompanyList, new JavaScriptDateTimeConverter());
+
+            return View(companySymbolVM);
+            //return View("~/Views/CompanyList/DataTables.cshtml");
+        }
+
 
         // GET */CompanyList/CompanySearch/
         //Try to make dropdown menu with selector for Symbol visualization 
@@ -57,50 +97,53 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
         }
 
-        //Try to make dropdown menu with selector for Symbol visualization 
-        public async Task<IActionResult> IndexSearch()
-        {
-            Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
+        ////Descontinuada
+        ////Try to make dropdown menu with selector for Symbol visualization 
+        //public async Task<IActionResult> IndexSearch()
+        //{
+        //    Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
 
 
-            //Company_LM.CompanyList = auxiliar.CarregaLista("companylist.csv");
-            //Company_LM.SList = new SelectList(Company_LM.CompanyList, "ID", "Sigla");
+        //    //Company_LM.CompanyList = auxiliar.CarregaLista("companylist.csv");
+        //    //Company_LM.SList = new SelectList(Company_LM.CompanyList, "ID", "Sigla");
 
-            var symbols = _context.Company.OrderBy(c => c.Sigla).Select(x => new { Id = x.ID, Value = x.Sigla });
-            var CLViewModel = new CompanyListModel();
+        //    var symbols = _context.Company.OrderBy(c => c.Sigla).Select(x => new { Id = x.ID, Value = x.Sigla });
+        //    var CLViewModel = new CompanyListModel();
 
-            //List <string> SymbolList = auxiliar.CarregaSiglas("companylist.csv");
-            //SelectListItem Selecionado = Company_Listing.SelectedValue();
+        //    //List <string> SymbolList = auxiliar.CarregaSiglas("companylist.csv");
+        //    //SelectListItem Selecionado = Company_Listing.SelectedValue();
 
 
-            //List<Company> Company_Listing = auxiliar.CarregaLista("companylist.csv");
-            //Company Selecionado = Company_Listing.Last();
-            //ViewBag.symbol = Selecionado.Sigla;
-            //ViewBag.Price = auxiliar.CarregaDadosYahoo(Selecionado.Sigla);
-            //ViewBag.CompanyList = Company_LM.CompanyList;
-            //ViewBag.CompanyList = new SelectList(Company_Listing, "ID", "Sigla");           
+        //    //List<Company> Company_Listing = auxiliar.CarregaLista("companylist.csv");
+        //    //Company Selecionado = Company_Listing.Last();
+        //    //ViewBag.symbol = Selecionado.Sigla;
+        //    //ViewBag.Price = auxiliar.CarregaDadosYahoo(Selecionado.Sigla);
+        //    //ViewBag.CompanyList = Company_LM.CompanyList;
+        //    //ViewBag.CompanyList = new SelectList(Company_Listing, "ID", "Sigla");           
 
-            return View(CLViewModel);
-        }
+        //    return View(CLViewModel);
+        //}
 
-        //POST method to obtain the selection value
-        [HttpPost]
-        public IActionResult IndexSearchResult(string SearchSymbol)
-        {
-            if (SearchSymbol == null)
-            {
-                return NotFound();
-            }
+        ////Descontinuado
+        ////POST method to obtain the selection value
+        //[HttpPost]
+        //public IActionResult IndexSearchResult(string SearchSymbol)
+        //{
+        //    if (SearchSymbol == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
+        //    Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
 
-            ViewBag.symbol = SearchSymbol;
-            ViewBag.Price = auxiliar.CarregaDadosYahoo(SearchSymbol);
-            ViewBag.Company = auxiliar.CarregaLista("companylist.csv");
-            //ViewBag.ShowDropDown = new SelectList(auxiliar.CarregaLista("companylist.csv"), "ID", "Sigla", "Nome");
+        //    ViewBag.symbol = SearchSymbol;
+        //    ViewBag.Price = auxiliar.CarregaDadosYahoo(SearchSymbol);
+        //    ViewBag.Company = auxiliar.CarregaLista("companylist.csv");
+        //    //ViewBag.ShowDropDown = new SelectList(auxiliar.CarregaLista("companylist.csv"), "ID", "Sigla", "Nome");
 
-            return View("~/Views/CompanyList/IndexSearch.cshtml");
-        }
+        //    return View("~/Views/CompanyList/IndexSearch.cshtml");
+        //}
+
 
         //View to test the YahooAPI, printing a table with the close and the date values
         public async Task<IActionResult> SymbolEod(string Symbol, int months)
@@ -137,13 +180,13 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
         // GET Method to display the data in line chart model
         // GET: /CompanyList/Charts/
-        public IActionResult Charts(string Symbol, int months)
+        public IActionResult Charts(string Symbol, DateTime start, DateTime end)
         {
             Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
 
-            List<Double> Eod = auxiliar.CarregaDadosYahoo(Symbol);
+            List<Double> Eod = auxiliar.CarregaDadosYahooP(Symbol, start, end);
             //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
+            List<DateTime> Dates = auxiliar.CarregaDatasYahooP(Symbol, start, end);
 
             //List<Closings> ClosingList = new List<Closings> { };
             //for (int i = 0; i < Eod.Count; i++)
@@ -163,6 +206,38 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             
             return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
             }
+
+        //CHARTS ORIGINAL
+        //public IActionResult Charts(string Symbol, int months)
+        //{
+        //    Auxiliares auxiliar = new Auxiliares(); //Create instance to use auxiliary methods.
+
+        //    List<Double> Eod = auxiliar.CarregaDadosYahoo(Symbol);
+        //    //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
+        //    List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
+
+        //    //List<Closings> ClosingList = new List<Closings> { };
+        //    //for (int i = 0; i < Eod.Count; i++)
+        //    //{
+        //    //    ClosingList.Add(
+        //    //        new Closings(Eod[i], Dates[i]));
+        //    //}
+        //    List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
+        //    for (int i = 0; i < Eod.Count; i++)
+        //    {
+        //        dataPoints.Add(
+        //            //new DataPoint((Double)Dates[i].DayOfYear, Eod[i]));
+        //            new DataPoint_Date(Dates[i], Eod[i]));
+        //    }
+        //    ViewBag.symbol = Symbol;
+        //    ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints, new JavaScriptDateTimeConverter());
+
+        //    return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
+        //}
+
+
+
+
 
         // GET Method to display the data in line chart model
         // GET: /CompanyList/Charts/

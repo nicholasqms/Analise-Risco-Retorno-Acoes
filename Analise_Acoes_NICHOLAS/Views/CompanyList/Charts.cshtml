@@ -14,6 +14,16 @@
 
 </head>
             <body>
+                <div id="form">
+                    <p>
+                        <form>
+                            <input type="hidden" name="Symbol" value="@ViewBag.symbol" />
+                            Inicio: <input type="date" name="start" defaultValue="2017-08-01">
+                            Fim: <input type="date" name="end" defaultValue="2017-10-06">
+                            <input type="submit" asp-action="Charts" asp-route-Symbol="@ViewBag.symbol" @*asp-route-months="2" *@ />
+                        </form>
+                    </p>
+                </div>
                 <div id="chartContainer"></div>
                 <script type="text/javascript">
 

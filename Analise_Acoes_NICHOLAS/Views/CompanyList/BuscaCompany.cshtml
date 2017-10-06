@@ -6,49 +6,53 @@
 
 <h2>Index</h2>
 
-<form asp-controller="CompanyList" asp-action="BuscaCompany" method="get">
-    <p>
-        <select asp-for="companySymbol" asp-items="Model.SList">
-            <option value="">All</option>
-        </select>
+<head>
+   
+    <link   rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.min.css"></link>
+    <script type="text/javascript" class="init">
+        var dataSet =[];//[Model.CompanyList];
 
-        Title: <input type="text" name="SearchString">
-        <input type="submit" value="Filter" />
-    </p>
-</form>
+           //<a asp-action="Charts" asp-route-Symbol=@*"@item.Sigla"*@,
+           @*(<form><input type="hidden" name="Symbol" value="@item.Sigla" />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyList[0].ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyList[0].Sigla)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyList[0].Nome)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.CompanyList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sigla)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    <a asp-action="Charts" asp-route-Symbol="@item.Sigla" asp-route-months="5">Charts</a> 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+               Periodo: < input type="number" name="months" >
+
+
+
+                   < input type="submit" asp - action = "Charts" asp - route - Symbol = "@item.Sigla" />
+               /*</ form >)])
+
+       });*@
+
+            $(document).ready(function() {
+	            $('#example').DataTable( {
+		            //data: dataSet,
+                    data: @Html.Raw(ViewBag.CompanyList),
+                    columns: [
+                        { "data": "ID", "name": "ID", "autoWidth": true },
+                        { "data": "Sigla", "name": "Sigla", "autoWidth": true },
+                        { "data": "Nome", "name": "Nome", "autoWidth": true }
+                        //{ "data": "ShowChart", "name": "Gráfico", "autoWidth": true } }
+			            @*{ title: "@Html.DisplayNameFor(model => model.CompanyList[0].ID)" },
+			            { title: "@Html.DisplayNameFor(model => model.CompanyList[0].Sigla)" },
+                        { title: "@Html.DisplayNameFor(model => model.CompanyList[0].Nome)" }*@
+                        
+		            ]
+	            } );
+            } );
+        </script>
+</head>
+<body>
+    <form asp-controller="CompanyList" asp-action="BuscaCompany" method="get">
+        <p>
+            <select asp-for="companySymbol" asp-items="Model.SList">
+                <option value="">All</option>
+            </select>
+
+            Title: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+    <table id="example" class="display" width="100%"></table>
+    @*<table id="example" class="display" cellspacing="0" width="100%"></table>*@
+</body>

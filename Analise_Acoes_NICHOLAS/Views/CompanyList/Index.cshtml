@@ -4,50 +4,74 @@
 }
 
 <head>
-    <title>Chart Example</title>
-    
+   @* <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+    <script type="text/javascript" class="init">
+    $(document).ready(function() {
+    $('#example').DataTable();
+    } );
+    </script>
 </head>
 
-<body>
-    @*Cria Tabela com os valores lidos do arquivo*@
-<table class="table"> 
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sigla)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewBag.Company)
-    {
-        <tr>
-            <td>
-               @item.ID
-            </td>
-            <td>
-                @item.Sigla
-            </td>
-            <td>
-                @item.Nome
-            </td>
-            <td>
-                <form>
-                    <input type="hidden" name="Symbol" value="@item.Sigla"/> @*como defino esse input hidden?*@
-                    @*<input type="submit"/>*@
-                      Periodo: <input type="number" name="months">  @*esse input vai certo, como month=input*@
-        <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Sigla" @*asp-route-months="2"*@/></form>
-                @*<a asp-action="Charts" asp-route-Symbol="@item.Sigla" asp-route-months="period">Charts</a>*@
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-</body>
+<div class="wrapper">
+    <div class="table-responsive">
+        @*<table class="table table-striped table-condensed table-hover">*@
+            <table id="example" class="display" width="100%">
+            @*Cria Tabela com os valores lidos do arquivo*@
+            @*<table class="table">*@
+            @*<thead>*@
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sigla)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.GraphPath)
+                </th>*@
+                <th></th>
+            </tr>
+            @*</thead>*@
+            <tbody>
+                @*@foreach (var item in @ViewBag.OnePageOfCompanies)*@
+               @foreach (var item in ViewBag.Company)
+               {
+                    <tr>
+                        <td>
+                            @item.ID
+                        </td>
+                        <td>
+                            @item.Sigla
+                        </td>
+                        <td>
+                            @item.Nome
+                        </td>
+                        @*<td>
+                            <form>
+                                <input type="hidden" name="Symbol" value="@item.Sigla" />
+                                <input type="button" asp-action="Charts"value="Gráfico" />
+                            </form>
+                        </td>*@
+
+                        <td>
+                            <form>
+                                <input type="hidden" name="Symbol" value="@item.Sigla" />
+                                Inicio: <input type="date" name="start" defaultValue="2017-08-01">
+                                Fim: <input type="date" name="end" defaultValue="2017-10-06">
+                                <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Sigla" @*asp-route-months="2" *@ />
+                            </form>
+                            @*<a asp-action="Charts" asp-route-Symbol="@item.Sigla" asp-route-months="period">Charts</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+

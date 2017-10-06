@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "7f56376e53f85da185540556ed4dd0196f760899"
+    "signature": "4537b85de4193df9c8a56e84b3bbcacdd4ddb7c3"
   },
   "compilationOptions": {
     "defines": [
@@ -29,7 +29,10 @@
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.0",
           "Newtonsoft.Json": "10.0.3",
-          "System-Web-Helpers.dll": "1.0.0"
+          "PagedList.Mvc": "4.5.0",
+          "System-Web-Helpers.dll": "1.0.0",
+          "X.PagedList.Mvc.Core": "1.0.4-beta",
+          "jquery.datatables": "1.10.15"
         },
         "runtime": {
           "Analise_Acoes_NICHOLAS.dll": {}
@@ -39,6 +42,12 @@
         }
       },
       "Chart.js/2.6.0": {},
+      "jQuery/1.7.0": {},
+      "jquery.datatables/1.10.15": {
+        "dependencies": {
+          "jQuery": "1.7.0"
+        }
+      },
       "Libuv/1.10.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0"
@@ -2488,13 +2497,32 @@
           "lib/netstandard1.3/NuGet.Frameworks.dll": {}
         }
       },
+      "PagedList/1.17.0": {
+        "runtime": {
+          "lib/net40/PagedList.dll": {}
+        },
+        "compile": {
+          "lib/net40/PagedList.dll": {}
+        }
+      },
+      "PagedList.Mvc/4.5.0": {
+        "dependencies": {
+          "PagedList": "1.17.0"
+        },
+        "runtime": {
+          "lib/net40/PagedList.Mvc.dll": {}
+        },
+        "compile": {
+          "lib/net40/PagedList.Mvc.dll": {}
+        }
+      },
       "Remotion.Linq/2.1.1": {
         "dependencies": {
           "System.Collections": "4.3.0",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Linq.Expressions": "4.3.0",
-          "System.Linq.Queryable": "4.0.1",
+          "System.Linq.Queryable": "4.3.0",
           "System.ObjectModel": "4.3.0",
           "System.Reflection": "4.3.0",
           "System.Reflection.Extensions": "4.3.0",
@@ -3238,7 +3266,7 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "System.Linq.Queryable/4.0.1": {
+      "System.Linq.Queryable/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
           "System.Diagnostics.Debug": "4.3.0",
@@ -4047,6 +4075,32 @@
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
       },
+      "X.PagedList/7.1.0": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0",
+          "System.Linq.Queryable": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.4/X.PagedList.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.4/X.PagedList.dll": {}
+        }
+      },
+      "X.PagedList.Mvc.Core/1.0.4-beta": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "2.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.0.0",
+          "NETStandard.Library": "2.0.0",
+          "X.PagedList": "7.1.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/X.PagedList.Mvc.Core.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/X.PagedList.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.0.0": {
         "dependencies": {
           "Microsoft.NETCore.DotNetHostPolicy": "2.0.0",
@@ -4237,6 +4291,20 @@
       "sha512": "sha512-ysANhHgsuS9UUSqQlzbrM28acMbK7fBTIess2tUKuKj6NnsknR5LknGhj3fBSbqJ5lglWnOEBcyjIcoK7VqEOw==",
       "path": "chart.js/2.6.0",
       "hashPath": "chart.js.2.6.0.nupkg.sha512"
+    },
+    "jQuery/1.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UEZuBreHZNLao3z9zNPeSadyoPwKDP/5kFh+Mn1Pm9ZS0czk7bv0O6RreloGSIMAfTLZCiigNkuPb2bXKtUM+g==",
+      "path": "jquery/1.7.0",
+      "hashPath": "jquery.1.7.0.nupkg.sha512"
+    },
+    "jquery.datatables/1.10.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9zRZ5zYafJHOwLU6sWoTM/agRx/dlu0HGQpGD/hEvqSEUJhSQjqJNTq77I97B+LCbh4eJrmNDS9PENiYY+0Isg==",
+      "path": "jquery.datatables/1.10.15",
+      "hashPath": "jquery.datatables.1.10.15.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -5463,6 +5531,20 @@
       "path": "nuget.frameworks/4.0.0",
       "hashPath": "nuget.frameworks.4.0.0.nupkg.sha512"
     },
+    "PagedList/1.17.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ou6F3WKXh49hOo0TxWM+SkIGuKllYPuPPvnSYOlQ1sTrtuEyuDUhYbSJd5Sdb06i/sWUJZTjiUecEs3Ht/Hx3g==",
+      "path": "pagedlist/1.17.0",
+      "hashPath": "pagedlist.1.17.0.nupkg.sha512"
+    },
+    "PagedList.Mvc/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D0M4qW2g4a9cwG8ozIKUnJheCrm5GpFTceqUl63AXWaAVnTgk+TysZYUOGMsBRuzid8aF+/E8b0bXM6+90jiEw==",
+      "path": "pagedlist.mvc/4.5.0",
+      "hashPath": "pagedlist.mvc.4.5.0.nupkg.sha512"
+    },
     "Remotion.Linq/2.1.1": {
       "type": "package",
       "serviceable": true,
@@ -5946,12 +6028,12 @@
       "path": "system.linq.parallel/4.3.0",
       "hashPath": "system.linq.parallel.4.3.0.nupkg.sha512"
     },
-    "System.Linq.Queryable/4.0.1": {
+    "System.Linq.Queryable/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
-      "path": "system.linq.queryable/4.0.1",
-      "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
+      "sha512": "sha512-In1Bmmvl/j52yPu3xgakQSI0YIckPUr870w4K5+Lak3JCCa8hl+my65lABOuKfYs4ugmZy25ScFerC4nz8+b6g==",
+      "path": "system.linq.queryable/4.3.0",
+      "hashPath": "system.linq.queryable.4.3.0.nupkg.sha512"
     },
     "System.Net.Http/4.3.0": {
       "type": "package",
@@ -6372,6 +6454,20 @@
       "sha512": "sha512-W6ZZ0/o7+3Qb77mRAQyLjPudHG3OMeeQ4p9yY13PUdJArmRCx2cLMm5F4tpIjJXxzHC0ew0oK7DMDGILMdfCnw==",
       "path": "windowsazure.storage/8.1.4",
       "hashPath": "windowsazure.storage.8.1.4.nupkg.sha512"
+    },
+    "X.PagedList/7.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gIZe98Do06achaVwO/jTIcJpY/aYKhG3RUzhGeiOAGmBm8gPKeoErAG4QYnmAJaJQ094kRyrkMUSx4oeBOWEkQ==",
+      "path": "x.pagedlist/7.1.0",
+      "hashPath": "x.pagedlist.7.1.0.nupkg.sha512"
+    },
+    "X.PagedList.Mvc.Core/1.0.4-beta": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BvNrEy1lwkOw1k10BgzQAvjdfgPuKwC7QZMxwnRv0DI/NM6OeoUDLdvMWGfZ3c6wOJ/jIYbwZQhNS/n+H0RvYQ==",
+      "path": "x.pagedlist.mvc.core/1.0.4-beta",
+      "hashPath": "x.pagedlist.mvc.core.1.0.4-beta.nupkg.sha512"
     },
     "Microsoft.NETCore.App/2.0.0": {
       "type": "package",

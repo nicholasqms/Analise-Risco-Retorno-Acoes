@@ -16,8 +16,40 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
     public class Auxiliares
     {
 
-    
-    public List<string> ObtainFirstColumn(string filename, int i)
+        public List<Company> CarregaListaInitializer(string filename)
+        {
+            List<string> lista_siglas = new List<string>();
+            List<string> lista_Nomes = new List<string>();
+
+
+            //lista_siglas = ObtainFirstColumn(list_of_companies.filename, 0);
+            //lista_Nomes = ObtainFirstColumn(list_of_companies.filename, 1);
+            lista_siglas = ObtainFirstColumn(filename, 0);
+            lista_Nomes = ObtainFirstColumn(filename, 1);
+
+            List<Company> CompanyList = new List<Company> { };
+            for (int i = 1; i < lista_siglas.Count; i++)
+            {
+                CompanyList.Add(
+                    new Company(lista_siglas[i], lista_Nomes[i]));
+                //{ 
+                //    ID = i,
+                //    Sigla = lista_siglas[i],
+                //    Nome = lista_Nomes[i]
+                //}
+                //);
+
+            }
+            lista_Nomes.Clear();
+            lista_siglas.Clear();
+
+            return CompanyList;
+        }
+
+
+
+
+        public List<string> ObtainFirstColumn(string filename, int i)
     {
         List<string> lista = new List<string>();
         using (var reader = new StreamReader(@filename))
@@ -74,6 +106,38 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
             
             return CompanyList;
         }
+
+
+        //public List<Company> CarregaListaPath(string filename)
+        //{
+        //    List<string> lista_siglas = new List<string>();
+        //    List<string> lista_Nomes = new List<string>();
+
+
+        //    //lista_siglas = ObtainFirstColumn(list_of_companies.filename, 0);
+        //    //lista_Nomes = ObtainFirstColumn(list_of_companies.filename, 1);
+        //    lista_siglas = ObtainFirstColumn(filename, 0);
+        //    lista_Nomes = ObtainFirstColumn(filename, 1);
+
+        //    List<Company> CompanyList = new List<Company> { };
+        //    for (int i = 1; i < lista_siglas.Count; i++)
+        //    {
+        //        string path = lista_siglas[i] + "start=2017-08-01&end=2017-10-06";
+        //        CompanyList.Add(
+        //            new Company(i, lista_siglas[i], lista_Nomes[i],path));
+        //        //{ 
+        //        //    ID = i,
+        //        //    Sigla = lista_siglas[i],
+        //        //    Nome = lista_Nomes[i]
+        //        //}
+        //        //);
+
+        //    }
+        //    lista_Nomes.Clear();
+        //    lista_siglas.Clear();
+
+        //    return CompanyList;
+        //}
 
         public List<Double> CarregaDadosYahoo(string symbol)
         {
@@ -133,6 +197,50 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
 
 
         }
+
+        public List<Double> CarregaDadosYahooP(string symbol, DateTime start, DateTime end)
+        {
+            while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
+            {
+                Token.Refresh();
+            }
+
+            List<HistoryPrice> hps = Historical.Get(symbol, start, end);
+            List<Double> Eod = new List<double> { };
+            for (int i = 0; i < hps.Count; i++)
+            {
+                Eod.Add(hps[i].Close);
+            }
+
+            return Eod;
+
+
+        }
+
+        public List<DateTime> CarregaDatasYahooP(string symbol, DateTime start, DateTime end)
+        {
+            while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
+            {
+                Token.Refresh();
+            }
+
+            List<HistoryPrice> hps = Historical.Get(symbol, start, end);
+            List<DateTime> Dates = new List<DateTime> { };
+
+            for (int i = 0; i < hps.Count; i++)
+            {
+                Dates.Add(hps[i].Date);
+                //Dates.Add(hps[i].Date.ToString("yyyy,MM,dd");
+            }
+
+
+            return Dates;
+
+
+        }
+
+
+
         //        private string[] companyListNames = ObtainFirstColumn("companylist1.csv");
 
         //public string[] CompanyListNames { get => CompanyListNames; set {ObtainFirstColumn("companylist1.csv"); } }
