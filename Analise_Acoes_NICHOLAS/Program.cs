@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Analise_Acoes_NICHOLAS.Models;
+using Analise_Acoes_NICHOLAS.Data;
 
 namespace Analise_Acoes_NICHOLAS
 {

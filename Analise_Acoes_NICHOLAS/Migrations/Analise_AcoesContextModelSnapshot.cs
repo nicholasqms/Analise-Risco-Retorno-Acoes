@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
+using Analise_Acoes_NICHOLAS.Data;
 
 namespace Analise_Acoes_NICHOLAS.Migrations
 {

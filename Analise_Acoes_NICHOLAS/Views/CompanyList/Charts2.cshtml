@@ -21,7 +21,9 @@
                     includeZero: false
                 },
                 data: [
-                    { type: "line" , dataPoints: @Html.Raw(ViewBag.DataPoints)}] 
+                    {
+                        type: "line",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints)}] 
             });
             chart.render();
 

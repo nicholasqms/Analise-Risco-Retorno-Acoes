@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Analise_Acoes_NICHOLAS.Models
+namespace Analise_Acoes_NICHOLAS.Data
 {
     public class Analise_AcoesContext : DbContext
     {

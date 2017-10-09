@@ -2818,6 +2818,9 @@
           }
         }
       },
+      "Moment.js/2.18.2": {
+        "type": "package"
+      },
       "NETStandard.Library/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -8146,6 +8149,19 @@
         "runtimes/win/lib/netstandard1.3/Microsoft.Win32.Registry.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Moment.js/2.18.2": {
+      "sha512": "ev4okotpwL6hFslhcXwTdFGU/leceMehiME3fNoAr7IZKD6DHGcAgUfoQco+vAs92Dy4FaHpC07d6Y/17098+Q==",
+      "type": "package",
+      "path": "moment.js/2.18.2",
+      "files": [
+        "Content/Scripts/moment-with-locales.js",
+        "Content/Scripts/moment-with-locales.min.js",
+        "Content/Scripts/moment.js",
+        "Content/Scripts/moment.min.js",
+        "moment.js.2.18.2.nupkg.sha512",
+        "moment.js.nuspec"
       ]
     },
     "NETStandard.Library/2.0.0": {
@@ -13493,6 +13509,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.0",
+      "Moment.js >= 2.18.2",
       "Newtonsoft.Json >= 10.0.3",
       "PagedList.Mvc >= 4.5.0",
       "System-Web-Helpers.dll >= 1.0.0",
@@ -13570,6 +13587,10 @@
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "2.0.0"
+          },
+          "Moment.js": {
+            "target": "Package",
+            "version": "2.18.2"
           },
           "jquery.datatables": {
             "target": "Package",

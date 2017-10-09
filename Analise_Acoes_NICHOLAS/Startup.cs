@@ -57,7 +57,7 @@ namespace Analise_Acoes_NICHOLAS
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=CompanyList}/{action=BuscaCompany}/{id?}");
+                    template: "{controller=CompanyList}/{action=Index}/{id?}");
             });
         }
     }

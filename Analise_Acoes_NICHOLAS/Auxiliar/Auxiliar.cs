@@ -17,7 +17,7 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
     {
 
         public List<Company> CarregaListaInitializer(string filename)
-        {
+           {
             List<string> lista_siglas = new List<string>();
             List<string> lista_Nomes = new List<string>();
 
@@ -92,14 +92,7 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
             for (int i = 1; i < lista_siglas.Count; i++)
             {
                 CompanyList.Add(
-                    new Company(i, lista_siglas[i], lista_Nomes[i]));
-                    //{ 
-                    //    ID = i,
-                    //    Sigla = lista_siglas[i],
-                    //    Nome = lista_Nomes[i]
-                    //}
-                    //);
-
+                    new Company(lista_siglas[i], lista_Nomes[i]));                    
             }
             lista_Nomes.Clear();
             lista_siglas.Clear();
@@ -123,8 +116,8 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
         //    for (int i = 1; i < lista_siglas.Count; i++)
         //    {
         //        string path = lista_siglas[i] + "start=2017-08-01&end=2017-10-06";
-        //        CompanyList.Add(
-        //            new Company(i, lista_siglas[i], lista_Nomes[i],path));
+        //        CompanyList.Add(                     
+        //        new Company(i, lista_siglas[i], lista_Nomes[i],path));
         //        //{ 
         //        //    ID = i,
         //        //    Sigla = lista_siglas[i],
@@ -139,7 +132,23 @@ namespace Analise_Acoes_NICHOLAS.Auxiliar
         //    return CompanyList;
         //}
 
-        public List<Double> CarregaDadosYahoo(string symbol)
+        //public List<String> CarregaListaPath(string filename)
+        //{
+        //    List<string> lista_siglas = new List<string>();
+        //    lista_siglas = ObtainFirstColumn(filename, 0);
+        //    List <string> CompanyListPath = new List<string>();
+        //    for (int i = 1; i < lista_siglas.Count; i++)
+        //    {
+        //        string path = lista_siglas[i] + "start=2017-08-01&end=2017-10-06";
+        //        CompanyListPath.Add((string)path);
+            
+        //}
+        //    lista_siglas.Clear();
+
+        //    return CompanyListPath;
+        //}
+
+public List<Double> CarregaDadosYahoo(string symbol)
         {
             while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
             {

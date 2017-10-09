@@ -7,22 +7,10 @@
 <h2>Index</h2>
 
 <head>
-   
+    
     <link   rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.min.css"></link>
     <script type="text/javascript" class="init">
-        var dataSet =[];//[Model.CompanyList];
-
-           //<a asp-action="Charts" asp-route-Symbol=@*"@item.Sigla"*@,
-           @*(<form><input type="hidden" name="Symbol" value="@item.Sigla" />
-
-               Periodo: < input type="number" name="months" >
-
-
-
-                   < input type="submit" asp - action = "Charts" asp - route - Symbol = "@item.Sigla" />
-               /*</ form >)])
-
-       });*@
+        var dataSet =[];
 
             $(document).ready(function() {
 	            $('#example').DataTable( {
@@ -43,7 +31,7 @@
         </script>
 </head>
 <body>
-    <form asp-controller="CompanyList" asp-action="BuscaCompany" method="get">
+    @*<form asp-controller="CompanyList" asp-action="BuscaCompany" method="get">
         <p>
             <select asp-for="companySymbol" asp-items="Model.SList">
                 <option value="">All</option>
@@ -52,7 +40,7 @@
             Title: <input type="text" name="SearchString">
             <input type="submit" value="Filter" />
         </p>
-    </form>
+    </form>*@
     <table id="example" class="display" width="100%"></table>
     @*<table id="example" class="display" cellspacing="0" width="100%"></table>*@
 </body>

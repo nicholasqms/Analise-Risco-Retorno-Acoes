@@ -2,60 +2,43 @@
 @{
     ViewData["Title"] = "Charts";
 }
-
-<h2>Index</h2>
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Chart Example</title>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+  
 </head>
             <body>
-                <div id="form">
-                    <p>
-                        <form>
-                            <input type="hidden" name="Symbol" value="@ViewBag.symbol" />
-                            Inicio: <input type="date" name="start" defaultValue="2017-08-01">
-                            Fim: <input type="date" name="end" defaultValue="2017-10-06">
-                            <input type="submit" asp-action="Charts" asp-route-Symbol="@ViewBag.symbol" @*asp-route-months="2" *@ />
-                        </form>
-                    </p>
+               @* <canvas id="myChart"></canvas>*@    
+                <div class="chartjs-wrapper">
+                    
+                    <canvas id="chartjs-0" class="chartjs" width="464" height="232" style="display: block; width: 464px; height: 232px;"></canvas>
+                    <script>
+                        new Chart(document.getElementById("chartjs-0"),
+                            {
+                                "type": "line",
+                                "data": {
+                                    "labels": @ViewBag.Labels,
+                                    "datasets": [{
+                                        "label": "@ViewBag.symbol",
+                                        "data": @Html.Raw(ViewBag.Data) ,
+                                        "fill": false,
+                                        "borderColor": "rgb(75, 192, 192)",
+                                        //"lineTension": 0.1
+                                    }]
+                                }, "options": {
+                                    "scales": {
+                                        "xAxes": [{
+                                            "time": {
+                                                "unit": 'month'
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                    </script>
+                    <p></p>
                 </div>
-                <div id="chartContainer"></div>
-                <script type="text/javascript">
-
-                    window.onload = function () {
-		var chart = new CanvasJS.Chart("chartContainer", {
-                        theme: "theme2",
-			animationEnabled: true,
-			title: {
-                        text: "@ViewBag.symbol" @*text:"Teste"*@
-			},
-			subtitles: [
-				{text: "" }
-			],
-			data: [
-			{
-                        type: "line", //change type to bar, line, area, pie, etc
-				dataPoints: @Html.Raw(ViewBag.DataPoints)
-			}
-            ],
-            options: {
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Day of Year'
-                        }
-                    }]
-                }
-            },
-		});
-		chart.render();
-	};
-    </script>
 </body>
 </html>

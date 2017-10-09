@@ -11,9 +11,8 @@ namespace Analise_Acoes_NICHOLAS.Models
     {
         public Company(){}
 
-        public Company(int i, string symbol, string name)
-        {
-            ID = i;
+        public Company(string symbol, string name)
+        {            
             Sigla = symbol;
             Nome = name;
         }
@@ -25,14 +24,8 @@ namespace Analise_Acoes_NICHOLAS.Models
         //    Nome = name;
         //    GraphPath = path;
         //}
-
-        public Company(string symbol, string name)
-        {
-            Sigla = symbol;
-            Nome = name;
-        }
-
-        public int ID { get; set; }
+        
+        //public int ID { get; set; }
 
 //        [Display(Name = "Nome do Arquivo")]
 //        public string filename { get { return filename; } set => "companylist1.csv"; }
@@ -45,7 +38,6 @@ namespace Analise_Acoes_NICHOLAS.Models
 
         //[Display(Name = "")]
         //public string GraphPath { get; set; }
-
 
     }
 }
