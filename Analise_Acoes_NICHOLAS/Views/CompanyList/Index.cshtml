@@ -5,16 +5,40 @@
 }
 
 <head>
-    <script type="text/javascript" class="init">
+    <script>
+        /* Formatting function for row details - modify as you need */
+        function chart() {
+          // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                '<td>' + '<div>' +
+
+                <vc:index-chart symbol="AAPL" start="DateTime.Today.AddMonths(-2)" end="DateTime.Today"></vc:index-chart> +
+                '</div>' + '</td>' +
+                '</tr>' +
+                '</table>';
+        };
+        </script>
+    <script  type="text/javascript" class="init">
         $(document).ready(function () {
             var table = $('#example').DataTable({
                 "processing": true,
                 "deferLoading": 10,
+                "columns": [
+                    { "data":  "@Html.DisplayNameFor(model => model.Symbol)" },
+                    { "data": "@Html.DisplayNameFor(model => model.Nome)"},
+                    {
+                        "className": 'chart-control',
+                        "orderable": false,
+                        "data": "period",
+                        "defaultContent": ''
+                    }
+                ],
             }
-                );           
-            $('#example tbody').on('click', 'tr', function () {
+            );
+            $('#example tbody').on('click', 'td.chart-control', function () {
                 var data = table.row(this).data();
-                alert('You clicked on ' + data[0] + '\'s row');
+                //alert('On click this should open the ' + data[0] + '\'s chart');
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
 
@@ -25,35 +49,16 @@
                 }
                 else {
                     // Open this row
-                    row.child(format(row.data())).show();
+                    row.child(chart()).show();
                     tr.addClass('shown');
                 }
             });
-            });
+        });
         //});
         $(window).load(function () {
             // When the page has loaded
             $("table").fadeIn(2000);
         });
-
-        /* Formatting function for row details - modify as you need */
-        function format(d) {
-            // `d` is the original data object for the row
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-                '<tr>' +
-                '<td>Full name:</td>' +
-                '<td>'+'</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Extension number:</td>' +
-                '<td>'+'</td>' +
-                '</tr>' +
-                '<tr>' +
-                '<td>Extra info:</td>' +
-                '<td>And any further details here (images etc)...</td>' +
-                '</tr>' +
-                '</table>';
-        }
 
     </script>
     <style>        table {
@@ -63,6 +68,11 @@
 
 </head>
 <body>
+    @*@await Component.InvokeAsync("IndexChart",new { symbol = "AAPL", start = DateTime.Today.AddMonths(-2), end = DateTime.Today })*@
+    <div id="viewcomponent">
+        <vc:index-chart symbol="AAPL" start="DateTime.Today.AddMonths(-2)" end="DateTime.Today">
+        </vc:index-chart>
+    </div>
     @*<div class="wrapper">
         <div class="table-responsive">*@
               <table id="example" class="display" width="100%">
@@ -70,7 +80,7 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Sigla)
+                            @Html.DisplayNameFor(model => model.Symbol)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Nome)
@@ -84,18 +94,18 @@
                     {
                         <tr>
                             <td>
-                                @item.Sigla
+                                @item.Symbol
                             </td>
                             <td>
                                 @item.Nome
                             </td>
                             <td>
                                 <form>
-                                    <input type="hidden" name="Symbol" value="@item.Sigla" />
+                                    <input type="hidden" name="Symbol" value="@item.Symbol" />
                                     Inicio: <input type="date" name="start" value="2017-08-01">
                                     Fim: <input type="date" name="end" value="@ViewBag.Date">
 
-                                    <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Sigla" />
+                                    <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Symbol" />
                                 </form>
                             </td>
                         </tr>

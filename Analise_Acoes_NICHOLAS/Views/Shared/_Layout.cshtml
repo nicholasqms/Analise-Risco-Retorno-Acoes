@@ -18,6 +18,14 @@
         <script src="~/js/jquery.dataTables.min.js"></script>
         <script src="~/js/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+        @* Morris script libraries *@
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>      
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        @*end*@
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -26,7 +34,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 
     </environment>
-
+    
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,13 +46,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Stock Analyser</a>
+                <a asp-area="" asp-controller="CompanyList" asp-action="Index" class="navbar-brand">Stock Analyser</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="CompanyList" asp-action="Index">Index</a></li>
                     <li><a asp-area="" asp-controller="CompanyList" asp-action="BuscaCompany">Search Company</a></li>
-                    @*<li><a asp-area="" asp-controller="CompanyList" asp-action="Index">Company List</a></li>*@
                 </ul>
                 @*@await Html.PartialAsync("_LoginPartial")*@
             </div>

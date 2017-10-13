@@ -1,44 +1,43 @@
 ﻿
 @{
-    ViewData["Title"] = "Charts";
+    ViewData["Title"] = "Chart Example Morris";
 }
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Chart Example</title>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  
-</head>
-            <body>
-               @* <canvas id="myChart"></canvas>*@    
-                <div class="chartjs-wrapper">
-                    
-                    <canvas id="chartjs-0" class="chartjs" width="464" height="232" style="display: block; width: 464px; height: 232px;"></canvas>
-                    <script>
-                        new Chart(document.getElementById("chartjs-0"),
-                            {
-                                "type": "line",
-                                "data": {
-                                    "labels": @ViewBag.Labels,
-                                    "datasets": [{
-                                        "label": "@ViewBag.symbol",
-                                        "data": @Html.Raw(ViewBag.Data) ,
-                                        "fill": false,
-                                        "borderColor": "rgb(75, 192, 192)",
-                                        //"lineTension": 0.1
-                                    }]
-                                }, "options": {
-                                    "scales": {
-                                        "xAxes": [{
-                                            "time": {
-                                                "unit": 'month'
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                    </script>
-                    <p></p>
-                </div>
+
+<body>
+<h1>Morris Chart</h1>
+@* <canvas id="myChart"></canvas>*@    
+    <div class="graph" id="myfirstchart" style="height: 250px;"></div>
+    <script>
+        window.onload = function () {
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'myfirstchart',
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: [
+                 @foreach(var item in ViewBag.DataPoints)
+                    {
+                        @:{ x: "@item.date", y: "@item.Y" },
+                    }
+                ],
+                // The name of the data record attribute that contains x-values.
+                xkey: "x",
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ["y"],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Value'],
+                smooth: false,
+                ymax: @ViewBag.MaxValue,
+                ymin: @ViewBag.MinValue,
+                pointSize: 3,
+                resize: true,
+            })
+        };
+    </script>
+    @*@Html.Raw(ViewBag.DataPoints)*@
 </body>
+
 </html>

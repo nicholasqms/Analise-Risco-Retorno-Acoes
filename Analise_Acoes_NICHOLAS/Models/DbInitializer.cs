@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using Analise_Acoes_NICHOLAS.Auxiliar;
+using Analise_Acoes_NICHOLAS.AuxiliaryF;
 using Analise_Acoes_NICHOLAS.Data;
 using System.Collections.Generic;
 
@@ -20,7 +20,7 @@ namespace Analise_Acoes_NICHOLAS.Models
                 {
                     return;   // DB has been seeded
                 }
-                Auxiliares auxiliar = new Auxiliares();
+                Auxiliary auxiliar = new Auxiliary();
                 
                 List<Company> CompanyList = auxiliar.CarregaListaInitializer("companylist.csv");
                 for (int i = 0; i < CompanyList.Count(); i++)

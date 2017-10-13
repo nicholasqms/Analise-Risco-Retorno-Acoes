@@ -16,7 +16,7 @@ namespace Analise_Acoes_NICHOLAS.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sigla = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    symbol = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

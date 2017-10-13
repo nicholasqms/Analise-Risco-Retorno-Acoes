@@ -10,15 +10,15 @@ namespace Analise_Acoes_NICHOLAS.Models
     [DataContract]
     public class DataPoint
     {
-        public DataPoint(Double x, double y)
+        public DataPoint(string x, double y)
         {
-            this.X = x;
+            this.date = x;
             this.Y = y;
         }
 
         //Explicitly setting the name to be used while serializing to JSON.
         [DataMember(Name = "x")]
-        public Nullable<Double> X = null;
+        public string date = null;
 
         //Explicitly setting the name to be used while serializing to JSON.
         [DataMember(Name = "y")]

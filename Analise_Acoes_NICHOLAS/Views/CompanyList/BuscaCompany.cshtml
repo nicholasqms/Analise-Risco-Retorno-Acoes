@@ -18,13 +18,9 @@
                     data: @Html.Raw(ViewBag.CompanyList),
                     columns: [
                         { "data": "ID", "name": "ID", "autoWidth": true },
-                        { "data": "Sigla", "name": "Sigla", "autoWidth": true },
+                        { "data": "Symbol", "name": "Symbol", "autoWidth": true },
                         { "data": "Nome", "name": "Nome", "autoWidth": true }
-                        //{ "data": "ShowChart", "name": "Gráfico", "autoWidth": true } }
-			            @*{ title: "@Html.DisplayNameFor(model => model.CompanyList[0].ID)" },
-			            { title: "@Html.DisplayNameFor(model => model.CompanyList[0].Sigla)" },
-                        { title: "@Html.DisplayNameFor(model => model.CompanyList[0].Nome)" }*@
-                        
+                       
 		            ]
 	            } );
             } );

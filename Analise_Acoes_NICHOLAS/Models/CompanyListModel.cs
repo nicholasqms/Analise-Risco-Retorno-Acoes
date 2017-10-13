@@ -11,6 +11,5 @@ namespace Analise_Acoes_NICHOLAS.Models
         public List<Company> CompanyList;
         public SelectList SList { get; set; }
         public string companySymbol { get; set; }
-        //public string Sigla;
     }
 }

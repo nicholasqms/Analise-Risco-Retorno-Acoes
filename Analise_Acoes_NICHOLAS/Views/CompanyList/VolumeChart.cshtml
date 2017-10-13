@@ -22,15 +22,8 @@
                 },
                 data: [
                     {
-                        type: "line",
-                        dataPoints: @Html.Raw(ViewBag.DataPoints)}]
-                        @*dataPoints: [
-                        @foreach(var item in ViewBag.DataPoints)
-                    {
-                        @:{ x: "@item.date", y: "@item.Y" },
-                    }
-                        ]
-                    }]*@
+                        type: "column",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints)}] 
             });
             chart.render();
 

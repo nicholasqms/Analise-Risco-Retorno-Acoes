@@ -29,7 +29,7 @@ namespace Analise_Acoes_NICHOLAS.Migrations
 
                     b.Property<string>("Nome");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("symbol");
 
                     b.HasKey("ID");
 
