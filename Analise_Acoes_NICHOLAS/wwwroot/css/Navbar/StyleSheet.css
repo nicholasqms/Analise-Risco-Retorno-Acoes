@@ -1,0 +1,141 @@
+﻿@media screen and (min-width:768px) {
+    .navbar-brand-centered {
+        position: absolute;
+        left: 50%;
+        display: inline-block;
+        width: 160px;
+        text-align: center;        
+        text-size-adjust : auto;
+        background-color: azure;
+        vertical-align: top;
+    }
+
+    .navbar > .container .navbar-brand-centered,
+    .navbar > .container-fluid .navbar-brand-centered {
+        margin-left: -80px;
+        margin-top: 0px;
+    }
+}
+brand {
+    display: inline-block;
+    color:antiquewhite;
+}
+.navbar-default {
+    background-color: darkslategray;
+    color: whitesmoke;
+    
+}
+
+
+
+div.chart-container {
+    display: none;
+}
+
+td.chart-Show {
+    background: url('../../wwwroot/images/details_open.png') no-repeat center center;
+
+    cursor: pointer;
+}
+
+tr.shown td.chart-Show {
+    background: url('../../wwwroot/images/details_close.png') no-repeat center center;
+}
+
+.btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default:active,
+    .btn-default.active,
+    .open .dropdown-toggle .btn-default {
+        color: #333333;
+        background-color: #ebebeb;
+        border-color: #adadad;
+    }
+
+    .btn-default:active,
+    .btn-default.active,
+    .open .dropdown-toggle .btn-default {
+        background-image: none;
+    }
+
+    .btn-default.disabled,
+    .btn-default[disabled],
+    fieldset[disabled] .btn-default,
+    .btn-default.disabled:hover,
+    .btn-default[disabled]:hover,
+    fieldset[disabled] .btn-default:hover,
+    .btn-default.disabled:focus,
+    .btn-default[disabled]:focus,
+    fieldset[disabled] .btn-default:focus,
+    .btn-default.disabled:active,
+    .btn-default[disabled]:active,
+    fieldset[disabled] .btn-default:active,
+    .btn-default.disabled.active,
+    .btn-default[disabled].active,
+    fieldset[disabled] .btn-default.active {
+        background-color: #ffffff;
+        border-color: #cccccc;
+    }
+
+    .btn-default .badge {
+        color: #ffffff;
+        background-color: #333333;
+    }
+
+.form-control-sm {
+    display: inline-block;
+    width: 50%;
+    height: 34px;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+    .form-control-sm:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102, 175, 233, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102, 175, 233, 0.6);
+    }
+
+    .form-control-sm::-moz-placeholder {
+        color: #999999;
+        opacity: 1;
+    }
+
+.form-control:-ms-input-placeholder {
+    color: #999999;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #999999;
+}
+
+.form-control-sm[disabled],
+.form-control-sm[readonly],
+fieldset[disabled] .form-control-sm {
+    cursor: not-allowed;
+    background-color: #eeeeee;
+    opacity: 1;
+}
+
+textarea .form-control-sm {
+    height: auto;
+    width: auto;
+}
+

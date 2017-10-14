@@ -1,12 +1,12 @@
-﻿function drawLineChart(symbol) {
+﻿function drawLineChart(symbol, start) {
     var DataPoints = [];
     var labels = [], data = [];
-    var start = new Date();
-    start.setMonth(8);
+    //var start = new Date();
+    //start.setMonth(8);
     var end = new Date();
     var jsonData = $.ajax({
         url: '/CompanyList/IndexChart/',
-        data: { 'symbol': symbol, "start": start.toISOString(), "end": end.toISOString() },
+        data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
             for (i in response) {
@@ -24,8 +24,8 @@
             //alert(JSON.stringify(DataPoints));
             //alert(JSON.stringify(labels));
             //alert(JSON.stringify(data));
-            myLineChart.update();
-            $("#chart-container"+symbol).fadeIn(2000);
+            //myLineChart.update();
+            $("#chart-container").fadeIn(2000);
         },
     });
     // Create the chart.js data structure using 'labels' and 'data'
@@ -56,7 +56,7 @@
 
 
     // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("myLineChart"+symbol).getContext("2d");
+    var ctx = document.getElementById("myLineChart").getContext("2d");
 
     // Instantiate a new chart
     var myLineChart = new Chart(ctx, config);

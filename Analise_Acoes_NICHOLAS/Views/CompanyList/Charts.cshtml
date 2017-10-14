@@ -13,14 +13,13 @@
 </head>
 <body>
 <h1>Chartjs.org</h1>
-    <div id="chart-container" class="chart-container" style="height:30vh; width:60vw">
-        <canvas id="myLineChart"></canvas>
-    </div>
+    <div id="chart-container" class="chart-container" style="height:40vh; width:60vw">        
+            <canvas id="myLineChart"></canvas>
+        </div>
         <br>
-        <br>
-
+        <br />
         <script>
-                drawLineChart("AAPL");    //wwwroot/js/DrawChart.js    
+                drawLineChart("@ViewBag.symbol", @ViewBag.Start);    //wwwroot/js/DrawChart.js    
         </script>
     </body>
     </html>

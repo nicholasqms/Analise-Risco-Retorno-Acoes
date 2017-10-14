@@ -125,7 +125,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             ViewBag.symbol = Symbol;
             ViewBag.MaxValue = (int) dataPoints.Max(t => t.Y);
             ViewBag.MinValue = (int) dataPoints.Min(t => t.Y);
-
+            ViewBag.Start = start.ToString("yyyy-MM-dd");
             ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.ChartType = "Closing Value";
             ViewBag.DataPoints = dataPoints;
@@ -185,67 +185,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         }
 
 
-        //// GET Method to display the data in line chart model
-        //// GET: /CompanyList/Charts/
-        //public IActionResult MultipleCharts(string Symbol1, int months1, string Symbol2, int months2)
-        //{
-        //    Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
-
-        //    List<Double> Eod1 = auxiliar.YahooLoadData(Symbol1);
-        //    List<DateTime> Dates1 = auxiliar.CarregaDatasYahooPeriod(Symbol1, months1);
-
-        //    List<Double> Eod2 = auxiliar.YahooLoadData(Symbol2);
-        //    List<DateTime> Dates2 = auxiliar.YahooLoadDates(Symbol2, months2);
-
-        //    //List<Closings> ClosingList1 = new List<Closings> { };
-        //    //List<Closings> ClosingList2 = new List<Closings> { };
-
-        //    //for (int i = 0; i < Eod1.Count; i++)
-        //    //{
-        //    //    ClosingList1.Add(
-        //    //        new Closings(Eod1[i], Dates1[i]));
-        //    //}
-        //    //for (int i = 0; i < Eod2.Count; i++)
-        //    //{ 
-        //    //    ClosingList2.Add(
-        //    //        new Closings(Eod2[i], Dates2[i]));
-        //    //}
-        //    List<DataPoint_Date> dataPoints1 = new List<DataPoint_Date> { };
-        //    List<DataPoint_Date> dataPoints2 = new List<DataPoint_Date> { };
-
-        //    //List<DataPoint> dataPoints1 = new List<DataPoint> { };
-        //    //List<DataPoint> dataPoints2 = new List<DataPoint> { };
-
-        //    for (int i = 0; i < Eod1.Count; i++)
-        //    {
-        //        dataPoints1.Add(
-        //            //new DataPoint((Double)Dates1[i].DayOfYear, Eod1[i]));
-        //            new DataPoint_Date(Dates1[i], Eod1[i]));
-
-        //            //new DataPoint_Date(("new Date(" + Dates1[i].ToString("yyyy,MM,dd") + ")"), Eod1[i]));
-        //    }
-        //    for (int i = 0; i < Eod2.Count; i++)
-        //    {
-        //        dataPoints2.Add(
-        //            //new DataPoint((Double)Dates2[i].DayOfYear, Eod2[i]));
-        //            new DataPoint_Date(Dates2[i], Eod2[i]));
-
-        //            //new DataPoint_Date(("new Date(" + Dates2[i].ToString("yyyy,MM,dd") + ")"), Eod2[i]);
-
-        //        //new DataPoint_Date(Dates2[i].ToString("yyyy,MM,dd"), Eod2[i]));
-        //    }
-        //    ViewBag.symbol1 = Symbol1;
-        //    ViewBag.symbol2 = Symbol2;
-        //    //ViewBag.DataPoints1 = dataPoints1;
-        //    //ViewBag.DataPoints2 = dataPoints2;
-
-        //    //ViewBag.DataPoints1 = JsonConvert.SerializeObject(dataPoints1);
-        //    ViewBag.DataPoints1 = JsonConvert.SerializeObject(dataPoints1, new JavaScriptDateTimeConverter());
-        //    ViewBag.DataPoints2 = JsonConvert.SerializeObject(dataPoints2, new JavaScriptDateTimeConverter());
-        //    //ViewBag.DataPoints2 = JsonConvert.SerializeObject(dataPoints2);
-
-        //    return View("~/Views/CompanyList/ChartsDual2.cshtml"); //View for Line chart with zooming
-        //}
 
         //Controller to Load the IndexChart ViewComponent as jQuery
         public async Task<IEnumerable<DataPoint>> IndexChart (string symbol, DateTime start, DateTime end)
