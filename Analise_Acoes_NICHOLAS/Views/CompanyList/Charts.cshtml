@@ -1,43 +1,87 @@
 ﻿
 @{
-    ViewData["Title"] = "Chart Example Morris";
+    ViewData["Title"] = "Chart Example Chartjs";
 }
 <!DOCTYPE html>
 <html>
-
+<head>
+    <style>
+        #chart-container {
+            display:none ;
+        }        
+    </style>
+</head>
 <body>
-<h1>Morris Chart</h1>
-@* <canvas id="myChart"></canvas>*@    
-    <div class="graph" id="myfirstchart" style="height: 250px;"></div>
-    <script>
-        window.onload = function () {
-            new Morris.Line({
-                // ID of the element in which to draw the chart.
-                element: 'myfirstchart',
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                data: [
-                 @foreach(var item in ViewBag.DataPoints)
-                    {
-                        @:{ x: "@item.date", y: "@item.Y" },
-                    }
-                ],
-                // The name of the data record attribute that contains x-values.
-                xkey: "x",
-                // A list of names of data record attributes that contain y-values.
-                ykeys: ["y"],
-                // Labels for the ykeys -- will be displayed when you hover over the
-                // chart.
-                labels: ['Value'],
-                smooth: false,
-                ymax: @ViewBag.MaxValue,
-                ymin: @ViewBag.MinValue,
-                pointSize: 3,
-                resize: true,
-            })
-        };
-    </script>
-    @*@Html.Raw(ViewBag.DataPoints)*@
-</body>
+<h1>Chartjs.org</h1>
+    <div id="chart-container" class="chart-container" style="height:30vh; width:60vw">
+        <canvas id="myLineChart"></canvas>
+    </div>
+        <br>
+        <br>
 
-</html>
+        <script>
+          //  function drawLineChart(symbol) {
+          //  var DataPoints = [];
+          //  var labels = [], data = [];
+          //  var start = new Date();
+          //  start.setMonth(8);
+          //  var end = new Date();
+          //          var jsonData = $.ajax({
+          //              url: '/CompanyList/IndexChart/',
+          //              data: { 'symbol': symbol, "start": start.toISOString(), "end": end.toISOString() },
+          //              dataType: 'json',
+          //              success: function (response) {
+          //                  for (i in response) {
+          //                      DataPoints[i] = (response[i]);
+          //                  }
+
+
+          //                  // Split timestamp and data into separate arrays
+          //                  for (i in DataPoints) {
+          //                      labels[i] = DataPoints[i].x;
+          //                      data[i] = DataPoints[i].y;
+          //                  }
+
+
+          //                  //alert(JSON.stringify(DataPoints));
+          //                  //alert(JSON.stringify(labels));
+          //                  //alert(JSON.stringify(data));
+          //                  myLineChart.update();
+          //                  $("#chart-container").fadeIn(2000);
+          //              },
+          //      });
+          //          // Create the chart.js data structure using 'labels' and 'data'
+          //          var config = {
+          //              type: 'line',                        
+          //              data: {
+          //                  labels: labels,
+          //                  datasets: [{
+          //                      label: "symbol value",
+          //                      //fillColor: "rgba(0,0,0,0.1)",
+          //                      backgroundColor: 'rgb(54, 162, 235)',
+          //                      bordercolor: 'rgb(54, 162, 235)',
+          //                      data: data,
+          //                      fill: false,
+          //                  }
+          //                  ],
+          //              },
+          //              options: {
+          //                  elements: {
+          //                      line: {
+          //                          tension: 0,
+          //                      }
+          //                  }
+          //              }
+          //              }
+
+                    
+          //          // Get the context of the canvas element we want to select
+          //          var ctx = document.getElementById("myLineChart").getContext("2d");
+
+          //          // Instantiate a new chart
+          //          var myLineChart = new Chart(ctx, config);
+          //}
+                drawLineChart("AAPL");               
+        </script>
+    </body>
+    </html>

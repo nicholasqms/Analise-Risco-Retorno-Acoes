@@ -223,6 +223,15 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         //    return View("~/Views/CompanyList/ChartsDual2.cshtml"); //View for Line chart with zooming
         //}
 
+        //Controller to Load the IndexChart ViewComponent as jQuery
+        public async Task<IEnumerable<DataPoint>> IndexChart (string symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
+            //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
+            var DataPoints = await auxiliary.GetDatapointsAsync(symbol,start,end);
+            return DataPoints;
+        //    return ViewComponent("IndexChart", new { symbol = "PIH", start = DateTime.Today.AddMonths(-2), end = DateTime.Today });
+        }
     }
 }
 
