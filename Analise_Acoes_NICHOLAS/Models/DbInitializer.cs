@@ -22,7 +22,7 @@ namespace Analise_Acoes_NICHOLAS.Models
                 }
                 Auxiliary auxiliar = new Auxiliary();
                 
-                List<Company> CompanyList = auxiliar.CarregaListaInitializer("companylist.csv");
+                List<Company> CompanyList = auxiliar.ListInitializer("companylist.csv");
                 for (int i = 0; i < CompanyList.Count(); i++)
                 {
                     context.Company.Add(CompanyList[i]);

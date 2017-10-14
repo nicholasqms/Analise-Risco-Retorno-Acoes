@@ -7,7 +7,7 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
 {
     public class Operations
     {
-        public List<Double> getStockFeedback ( List <double> Values)
+        public List<Double> GetStockFeedback ( List <double> Values)
         {
             List<double> Feedback = new List<double>();
 

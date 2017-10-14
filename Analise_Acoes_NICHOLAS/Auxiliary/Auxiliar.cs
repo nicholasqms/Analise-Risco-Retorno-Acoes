@@ -16,36 +16,31 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
     public class Auxiliary
     {
 
-        public List<Company> CarregaListaInitializer(string filename)
+        public List<Company> ListInitializer(string filename)
            {
-            List<string> lista_siglas = new List<string>();
-            List<string> lista_Nomes = new List<string>();
+            List<string> symbolList = new List<string>();
+            List<string> nameList = new List<string>();
 
-
-            //lista_siglas = ObtainFirstColumn(list_of_companies.filename, 0);
-            //lista_Nomes = ObtainFirstColumn(list_of_companies.filename, 1);
-            lista_siglas = ObtainFirstColumn(filename, 0);
-            lista_Nomes = ObtainFirstColumn(filename, 1);
+            symbolList = ObtainFirstColumn(filename, 0);
+            nameList = ObtainFirstColumn(filename, 1);
 
             List<Company> CompanyList = new List<Company> { };
-            for (int i = 1; i < lista_siglas.Count; i++)
+            for (int i = 1; i < symbolList.Count; i++)
             {
                 CompanyList.Add(
-                    new Company(lista_siglas[i], lista_Nomes[i]));
+                    new Company(symbolList[i], nameList[i]));
             }
-            lista_Nomes.Clear();
-            lista_siglas.Clear();
+            nameList.Clear();
+            symbolList.Clear();
 
             return CompanyList;
         }
 
 
-
-
         public List<string> ObtainFirstColumn(string filename, int i)
-    {
-        List<string> lista = new List<string>();
-        using (var reader = new StreamReader(@filename))
+        {
+            List<string> lista = new List<string>();
+            using (var reader = new StreamReader(@filename))
         {
             while (!reader.EndOfStream)
             {
@@ -57,44 +52,40 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
             }
         }
         return lista;
-    }
+        }
     
 
-    public List<string> CarregaSiglas (string filename)
+        public List<string> CarregaSiglas (string filename)
         {
-            List<string> lista_siglas = new List<string>();
+            List<string> symbolList = new List<string>();
             
-            lista_siglas = ObtainFirstColumn(filename, 0);
-            
-            
-            return lista_siglas;
+            symbolList = ObtainFirstColumn(filename, 0);
+                        
+            return symbolList;
         }
 
-     public List<Company> CarregaLista (string filename)
-        {
-            List<string> lista_siglas = new List<string>();
-            List<string> lista_Nomes = new List<string>();
-
-
-            //lista_siglas = ObtainFirstColumn(list_of_companies.filename, 0);
-            //lista_Nomes = ObtainFirstColumn(list_of_companies.filename, 1);
-            lista_siglas = ObtainFirstColumn(filename, 0);
-            lista_Nomes = ObtainFirstColumn(filename, 1);
-
-            List<Company> CompanyList = new List<Company> { };
-            for (int i = 1; i < lista_siglas.Count; i++)
+         public List<Company> CarregaLista (string filename)
             {
-                CompanyList.Add(
-                    new Company(lista_siglas[i], lista_Nomes[i]));                    
-            }
-            lista_Nomes.Clear();
-            lista_siglas.Clear();
+                List<string> symbolList = new List<string>();
+                List<string> nameList = new List<string>();
+
+                symbolList = ObtainFirstColumn(filename, 0);
+                nameList = ObtainFirstColumn(filename, 1);
+
+                List<Company> CompanyList = new List<Company> { };
+                for (int i = 1; i < symbolList.Count; i++)
+                {
+                    CompanyList.Add(
+                        new Company(symbolList[i], nameList[i]));                    
+                }
+                nameList.Clear();
+                symbolList.Clear();
             
-            return CompanyList;
-        }
+                return CompanyList;
+         }
 
 
-        public List<Double> yahooLoadData(string symbol, DateTime start, DateTime end)
+        public List<Double> YahooLoadData(string symbol, DateTime start, DateTime end)
         {
             while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
             {
@@ -113,7 +104,7 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
 
         }
 
-        public List<DateTime> yahooLoadDates(string symbol, DateTime start, DateTime end)
+        public List<DateTime> YahooLoadDates(string symbol, DateTime start, DateTime end)
         {
             while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
             {
@@ -132,9 +123,9 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
 
         }
 
-        public List<Double> getStockFeedback(string symbol, DateTime start, DateTime end)
+        public List<Double> GetStockFeedback(string symbol, DateTime start, DateTime end)
         {            
-            List<double> Values = yahooLoadData(symbol, start, end);
+            List<double> Values = YahooLoadData(symbol, start, end);
 
             List<double> Feedback = new List<double>();
             Feedback.Add(0);
@@ -147,12 +138,27 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
             return Feedback;
         }
 
+        public List<Double> GetLogFeedback (string symbol, DateTime start, DateTime end)
+        {
+            List<double> Values = GetStockFeedback(symbol, start, end);
+            List<double> logFeedback = new List<double>();
+            
+            for (int i = 1; i < Values.Count();)
+            {
+                logFeedback.Add(Math.Log(Values[i]+1));
+                i++;
+            }
+
+            return logFeedback;
+
+        }
+
         public Task<IEnumerable<DataPoint>> GetDatapointsAsync (string symbol, DateTime start, DateTime end)
         {
             return Task.Run(() =>
             {
-                List<Double> Eod = yahooLoadData(symbol, start, end);
-                List<DateTime> Dates = yahooLoadDates(symbol, start, end);
+                List<Double> Eod = YahooLoadData(symbol, start, end);
+                List<DateTime> Dates = YahooLoadDates(symbol, start, end);
 
 
                 List<DataPoint> dataPointsL = new List<DataPoint> { };
@@ -166,6 +172,7 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
                 return dataPoints;
             });            
         }
+
 
     }
 }

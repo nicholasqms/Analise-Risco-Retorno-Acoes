@@ -80,9 +80,9 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            List<Double> Eod = auxiliar.yahooLoadData(Symbol, start, end);
+            List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
             //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.yahooLoadDates(Symbol, start, end);
+            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
 
             
             List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
@@ -109,9 +109,9 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            List<Double> Eod = auxiliar.yahooLoadData(Symbol, start, end);
+            List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
             //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.yahooLoadDates(Symbol, start, end);
+            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
 
 
             List<DataPoint> dataPointsL = new List<DataPoint> { };
@@ -140,10 +140,10 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            //List<Double> Eod = auxiliar.yahooLoadData(Symbol, start, end);
+            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
             //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.yahooLoadDates(Symbol, start, end);
-            List<Double> FeedBack = auxiliar.getStockFeedback(Symbol, start, end);
+            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
+            List<Double> FeedBack = auxiliar.GetStockFeedback(Symbol, start, end);
 
             List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
             for (int i = 0; i < FeedBack.Count; i++)
@@ -154,7 +154,31 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             }
             ViewBag.symbol = Symbol;
             ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            ViewBag.ChartType = "Option Feedback";
+            ViewBag.ChartType = "Symbol Feedback";
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints, new JavaScriptDateTimeConverter());
+
+            return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
+        }
+
+        public IActionResult ChartLogFeedback(string Symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
+
+            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
+            //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
+            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
+            List<Double> FeedBack = auxiliar.GetLogFeedback(Symbol, start, end);
+
+            List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
+            for (int i = 0; i < FeedBack.Count; i++)
+            {
+                dataPoints.Add(
+                    //new DataPoint((Double)Dates[i].DayOfYear, Eod[i]));
+                    new DataPoint_Date(Dates[i], FeedBack[i]));
+            }
+            ViewBag.symbol = Symbol;
+            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.ChartType = "Symbol Log Feedback";
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints, new JavaScriptDateTimeConverter());
 
             return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
@@ -167,11 +191,11 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         //{
         //    Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-        //    List<Double> Eod1 = auxiliar.yahooLoadData(Symbol1);
+        //    List<Double> Eod1 = auxiliar.YahooLoadData(Symbol1);
         //    List<DateTime> Dates1 = auxiliar.CarregaDatasYahooPeriod(Symbol1, months1);
 
-        //    List<Double> Eod2 = auxiliar.yahooLoadData(Symbol2);
-        //    List<DateTime> Dates2 = auxiliar.yahooLoadDates(Symbol2, months2);
+        //    List<Double> Eod2 = auxiliar.YahooLoadData(Symbol2);
+        //    List<DateTime> Dates2 = auxiliar.YahooLoadDates(Symbol2, months2);
 
         //    //List<Closings> ClosingList1 = new List<Closings> { };
         //    //List<Closings> ClosingList2 = new List<Closings> { };

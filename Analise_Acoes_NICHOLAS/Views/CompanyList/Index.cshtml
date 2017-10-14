@@ -19,6 +19,10 @@
         }
         </style>
     <script  type="text/javascript" class="init">
+        var symbol;
+        var start = new Date();
+        start.setMonth(8);
+        start = start.toISOString();
         $(document).ready(function () {
             var table = $('#indexTable').DataTable({
                 "processing": true,
@@ -41,32 +45,40 @@
                 ],
             }
             );
+            $('#indexTable tbody').on('click', 'td.chart-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                var data = table.row(tr).data();
+                symbol = data.Symbol;
+                //alert("The new symbol value is " + symbol);
+            });
             $('#indexTable tbody').on('click', 'td.chart-Show', function () {
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
                 var data = table.row(tr).data();
-                //alert('On click this should open the ' + data.Symbol + '\'s chart');
 
-                //alert(dataRow[1]);
                 if (row.child.isShown()) {
-                    // This row is already open - close it
                     row.child.hide();
                     tr.removeClass('shown');
                 }
-                else {
-                    // Open this row
-                    //row.child(chart()).show();                    
+                else {                  
                     row.child( $(
                         '<div id="chart-container'+data.Symbol+'" class="chart-container" style="height:40vh; width:60vw">' +
                             '<canvas id="myLineChart'+data.Symbol+'"></canvas>' +
                         '</div>'
-                    )).show();
-                    drawLineChart(data.Symbol);
+                    )).show();                   
+                    //drawLineChart(data.Symbol);
+                    drawLineChartPeriod(data.Symbol,start);
                     tr.addClass('shown');
                 }
             });
         });
         //});
+        function setStartValue() {
+            start = document.getElementById("startInput").value;
+            //alert("The new start value is " + start);
+            //drawLineChartPeriod(symbol, start);
+        }
         $(window).load(function () {
             // When the page has loaded
             $("table").fadeIn(2000);
@@ -79,15 +91,7 @@
 
 </head>
 <body>
-    @*@await Component.InvokeAsync("IndexChart",new { symbol = "AAPL", start = DateTime.Today.AddMonths(-2), end = DateTime.Today })*@
-    @*<div id="viewcomponent">
-        <vc:index-chart symbol="AAPL" start="DateTime.Today.AddMonths(-2)" end="DateTime.Today">
-        </vc:index-chart>
-    </div>*@
-    @*<div class="wrapper">
-        <div class="table-responsive">*@
               <table id="indexTable" class="display" cellspacing="0" width="100%">
-                @*Cria Tabela com os valores lidos do arquivo*@
                 <thead>
                     <tr>
                         <th></th>
@@ -114,19 +118,17 @@
                                 @item.Nome
                             </td>
                             <td>
-                                <form>
-                                    <input type="hidden" name="Symbol" value="@item.Symbol" />
-                                    Inicio: <input type="date" name="start" value="2017-08-01">
-                                    Fim: <input type="date" name="end" value="@ViewBag.Date">
+                                @*<form>*@
+                                    <input id="symbolInput" type="hidden" name="Symbol" value="@item.Symbol" />
+                                    Start Date: <input id="startInput" type="date" name="start" value="2017-08-01" >
+                                    @*Fim: <input id="endInput" type="date" name="end" value="@ViewBag.Date">*@
 
-                                    <input type="submit" asp-action="Charts" asp-route-Symbol="@item.Symbol" />
-                                </form>
+                                    @*<input id="sendInput" type="submit" asp-action="Charts" asp-route-Symbol="@item.Symbol"/>*@
+                                    <button id="sendInput" onclick="setStartValue()">Send</button>
+                                @*</form>*@
                             </td>                            
                         </tr>
                     }
                 </tbody>
             </table>
-        @*</div>
-    </div>*@
-
 </body>
