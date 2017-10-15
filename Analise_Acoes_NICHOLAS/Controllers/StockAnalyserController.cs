@@ -19,16 +19,16 @@ using System.Web;
 
 namespace Analise_Acoes_NICHOLAS.Controllers
 {
-    public class CompanyListController : Controller
+    public class StockAnalyserController : Controller
     {
         private readonly Analise_AcoesContext _context;
         //Context for the Project
-        public CompanyListController(Analise_AcoesContext context)
+        public StockAnalyserController(Analise_AcoesContext context)
         {
             _context = context;
         }
 
-        // GET: /CompanyList/
+        // GET: /StockAnalyser/
         public IActionResult Index()
         {
             Auxiliary auxiliar = new Auxiliary();
@@ -37,10 +37,10 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             
             ViewBag.Company = CompanyList;
            // ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            return View("~/Views/CompanyList/Index.cshtml");
+            return View("~/Views/StockAnalyser/Index.cshtml");
         }
 
-        //// GET: /CompanyList/Buscacompany
+        //// GET: /StockAnalyser/Buscacompany
         public async Task<IActionResult> BuscaCompany(string companySymbol, string searchString)
         {
             // Use LINQ to get list of companies.
@@ -72,7 +72,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
         
         // GET Method to display the data in line chart model
-        // GET: /CompanyList/CompareSymbols/
+        // GET: /StockAnalyser/CompareSymbols/
         public IActionResult CompareSymbols()
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
@@ -85,50 +85,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
             return View(); //View for Line chart with zooming
         }
-
-        // GET: /CompanyList/Charts/
-        public IActionResult ChartFeedback(string Symbol, DateTime start, DateTime end)
-        {
-            Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
-
-            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
-            List<Double> FeedBack = auxiliar.GetStockFeedback(Symbol, start, end);
-
-            List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
-            for (int i = 0; i < FeedBack.Count; i++)
-            {
-                dataPoints.Add(
-                    new DataPoint_Date(Dates[i], FeedBack[i]));
-            }
-            ViewBag.symbol = Symbol;
-            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            ViewBag.ChartType = "Symbol Feedback";
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints, new JavaScriptDateTimeConverter());
-
-            return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
-        }
-
-        public IActionResult ChartLogFeedback(string Symbol, DateTime start, DateTime end)
-        {
-            Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
-            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
-            List<Double> FeedBack = auxiliar.GetLogFeedback(Symbol, start, end);
-
-            List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
-            for (int i = 0; i < FeedBack.Count; i++)
-            {
-                dataPoints.Add(
-                    new DataPoint_Date(Dates[i], FeedBack[i]));
-            }
-            ViewBag.symbol = Symbol;
-            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            ViewBag.ChartType = "Symbol Log Feedback";
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints, new JavaScriptDateTimeConverter());
-
-            return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
-        }
-
-
 
         //Controller to Load the IndexChart ViewComponent as jQuery
         public async Task<IEnumerable<DataPoint>> IndexChart (string symbol, DateTime start, DateTime end)

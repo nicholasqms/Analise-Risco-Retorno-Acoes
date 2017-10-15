@@ -7,52 +7,51 @@
 <head>
     <style>
         #chart-container {
-            display:none ;
-        }        
-        #secondInterface{
-            display:none;
-        }
-        /*#startInput {
             display: none;
-        }*/
+        }
+
+        #secondInterface {
+            display: none;
+        }
+
     </style>
-    
+
 </head>
 <body>
     <h1></h1>
-    
+
     <div id="firstInterface" class="col-xs-4">
         Set the starting date for analysis : <input id="firstInput" class="form-control-sm" type="date" name="start" value="2017-08-01">
-        <button class="btn btn_default" onclick="ChangeStartButton();$('#resetCanvasBtn').hide()">Set</button>
+        <button class="btn btn_default" onclick="ChangeStartButton(); $('#resetCanvasBtn').hide();">Set</button>
     </div>
-    
-    <div id="secondInterface" class="col-xs-3">
-        Analysys Period Start: <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue()" value="">        
-            <div id="chart-container" class="chart-container" style="height:70vh; width:90vw">
-                <canvas id="myLineChart"></canvas>
-            </div>
-        <select class="form-control-sm" id="selectSymbol" onchange="ChangeValue()">
+
+    <div id="secondInterface" class="col-xs-4">
+        Analysys Period Start: <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue();$('#selectChartType').show()" value="">
+        <div id="chart-container" class="chart-container" style="height:70vh; width:85vw">
+            <canvas id="myLineChart"></canvas>
+        </div>
+        <select class="form-control-sm" id="selectSymbol" onchange="ChangeValue();">
             @foreach (var item in @ViewBag.Company)
             {
                 <option value="@item.Symbol">@item.Symbol</option>
             }
         </select>
-        <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">            
+        <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">
             <option value="Line">Closing Value</option>
             <option value="Feedback">Feedback</option>
             <option value="Volume">Volume</option>
         </select>
-        <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart();$('#selectChartType').hide()">Start Chart</button>
+        <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart(); $('#selectChartType').hide();$('#addDataset').show()">Start Chart</button>
 
         <button id="addDataset" class="btn btn_default" onclick="AddDataSetType(selectedSymbol, start, chartType); myLineChart.update();">Add Dataset</button>
-        @*<button id="addDataset" class="btn btn_default" onclick="myLineChart.update();">Update Chart</button>*@
+        
         <button id="resetCanvasBtn" class="btn btn_default" onclick="ResetCanvas();$('#selectChartType').show()"> Reset Canvas</button>
     </div>
-        <br>
-        <br />
-        <script>                
+    <br>
+    <br />
+    <script>
+
             var start = new Date();
-            //start = start.setMonth(8);
             start = start.toISOString().split('T')[0];
             start = "2017-08-01";
             var end = new Date();
@@ -61,16 +60,17 @@
             var configType = 'line';
 
             document.getElementById("selectChartType").value = chartType;
-            var url = '/CompanyList/' + chartType + 'Chart';
+            var url = '/StockAnalyser/' + chartType + 'Chart';
 
             function ChangeStartButton() {
                 $('#firstInterface').hide();
                 $("#secondInterface").fadeIn(1000);
+                $('#addDataset').hide();
                 ChangeStartValue(document.getElementById("firstInput").value);
                 document.getElementById("startInput").value = start;
             }
 
-            
+
 
             function ChangeStartValue(date) {
                 if (canvasWasStarted == true) {
@@ -85,7 +85,7 @@
                 //alert(start);
             }
 
-            var selectedSymbol = "@ViewBag.Company[0].Symbol";          
+            var selectedSymbol = "@ViewBag.Company[0].Symbol";
             function ChangeValue() {
                 var inputSelect = document.getElementById("selectSymbol");
                 selectedSymbol = inputSelect.options[inputSelect.selectedIndex].value;
@@ -103,9 +103,7 @@
                 }
                 //alert(chartType);
             }
-            
-            
-            //function drawLineChartMultiple(selectedSymbol, start) {    //wwwroot/js/DrawChart.js
+
             var labels = [], data = [];
             var DataPoints = [];
             var jsonData;
@@ -113,10 +111,8 @@
             var myLineChart, ctx;
 
             function ResetCanvas() {
-                //myLineChart.clear();
                 data = [];
                 labels = [];
-                //config = [];
                 $('#myLineChart').remove();
                 $('#chart-container').hide();
                 $('#chart-container').append('<canvas id="myLineChart"></canvas>');
@@ -126,15 +122,15 @@
                 canvasWasStarted = false; // Reset the flag
                 $('#resetCanvasBtn').hide();
                 $("#startDatasetBtn").show();
-
+                $('#addDataset').hide();
             };
-                     
+
             function StartChart() {
-                var url = '/CompanyList/' + chartType + 'Chart';
+                var url = '/StockAnalyser/' + chartType + 'Chart';
                 if (selectedSymbol != "") {
                     if (canvasWasStarted == false) {
                         jsonData = $.ajax({
-                            url: url,//'/CompanyList/IndexChart/',
+                            url: url,//'/StockAnalyser/IndexChart/',
                             data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
                             dataType: 'json',
                             success: function (response) {
@@ -176,7 +172,7 @@
                                 maintainAspectRatio: false
                             }
                         };
-            
+
                         // Get the context of the canvas element we want to select
                         ctx = document.getElementById("myLineChart").getContext("2d");
 
@@ -192,7 +188,7 @@
                     else if (canvasWasStarted == true)
                     {
                         jsonData = $.ajax({
-                            url: '/CompanyList/IndexChart/',
+                            url: '/StockAnalyser/IndexChart/',
                             data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
                             dataType: 'json',
                             success: function (response) {
@@ -239,13 +235,6 @@
                 }
             }
 
-            $(window).load(function () {
-                // When the page has loaded
-                //$("#chart-container").fadeIn(2000);
-            });
-
-            //document.getElementById('addDataset').addEventListener('click',AddDataSet(start));
-            
-        </script>
-    </body>
-    </html>
+    </script>
+</body>
+</html>

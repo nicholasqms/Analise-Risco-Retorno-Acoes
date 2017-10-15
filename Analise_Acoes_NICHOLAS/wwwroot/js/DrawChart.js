@@ -5,7 +5,7 @@
     //start.setMonth(8);
     var end = new Date();
     var jsonData = $.ajax({
-        url: '/CompanyList/IndexChart/',
+        url: '/StockAnalyser/IndexChart/',
         data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
@@ -64,7 +64,7 @@ function drawLineChartPeriod(symbol,start) {
     var end = new Date();
 
     var jsonData = $.ajax({
-        url: '/CompanyList/LineChart/',
+        url: '/StockAnalyser/LineChart/',
         data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
@@ -122,7 +122,7 @@ function drawFeedbackChartPeriod(symbol, start) {
     var end = new Date();
 
     var jsonData = $.ajax({
-        url: '/CompanyList/FeedbackChart/',
+        url: '/StockAnalyser/FeedbackChart/',
         data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
@@ -180,7 +180,7 @@ function drawVolumeChartPeriod(symbol, start) {
     var end = new Date();
 
     var jsonData = $.ajax({
-        url: '/CompanyList/VolumeChart/',
+        url: '/StockAnalyser/VolumeChart/',
         data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
@@ -232,100 +232,6 @@ function drawVolumeChartPeriod(symbol, start) {
 }
 
 
-//function drawLineChartMultiple(symbol, start) {
-//    var DataPoints = [];
-//    var labels = [], data = [];
-//    //var start = new Date();
-//    //start.setMonth(8);
-//    var end = new Date();
-//    var jsonData = $.ajax({
-//        url: '/CompanyList/IndexChart/',
-//        data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
-//        dataType: 'json',
-//        success: function (response) {
-//            for (i in response) {
-//                DataPoints[i] = (response[i]);
-//            }
-
-//            // Split labels and data into separate arrays
-//            for (i in DataPoints) {
-//                labels[i] = DataPoints[i].x;
-//                data[i] = DataPoints[i].y;
-//            }
-//            myLineChart.update();
-
-//            $("#chart-container").fadeIn(2000);
-//        },
-//    });
-
-//    // Create the chart.js data structure using 'labels' and 'data'
-//    var config = {
-//        type: 'line',
-//        data: {
-//            labels: labels,
-//            datasets: [{
-//                label: symbol,
-//                bordercolor: 'rgb(54, 162, 235)',
-//                backgroundColor: 'rgb(54, 162, 235)',
-//                fill: false,
-//                data: data,
-//            }
-//            ],
-//        },
-//        options: {
-//            elements: {
-//                line: {
-//                    tension: 0,
-//                }
-//            },
-//            responsive: true,
-//            maintainAspectRatio: false
-//        }
-//    }
-
-//    var newDataset = {
-//        label: "AAPL",
-//        borderColor: 'rgb(246, 23, 23)',
-//        backgroundColor: 'rgb(246, 23, 23)',
-//        fill: false,
-//        data: [],
-//    };
-//    var DataPoints2 = [];
-//    var labels2 = [], data2 = [];
-
-
-//    var jsonData2 = $.ajax({
-//        url: '/CompanyList/IndexChart/',
-//        data: { 'symbol': "AAPL", "start": start, "end": end.toISOString() },
-//        dataType: 'json',
-//        success: function (response) {
-//            for (i in response) {
-//                DataPoints2[i] = (response[i]);
-//            }
-
-//            // Split labels and data into separate arrays
-//            for (i in DataPoints) {
-//                labels2[i] = DataPoints2[i].x;
-//                data2[i] = DataPoints2[i].y;
-//            }
-//            for (var index = 0; index < data2.length; ++index) {
-//                newDataset.data.push(data2[index]);
-//            }
-//        },
-//    });
-    
-    
-//    // Get the context of the canvas element we want to select
-//    var ctx = document.getElementById("myLineChart").getContext("2d");
-
-//    // Instantiate a new chart
-//    var myLineChart = new Chart(ctx, config);
-
-//    config.data.datasets.push(newDataset);
-//    myLineChart.update();
-
-//}
-
 
 function AddDataSet(symbol, start) {
     chartColors = [
@@ -354,7 +260,7 @@ function AddDataSet(symbol, start) {
 
 
     var jsonData2 = $.ajax({
-        url: '/CompanyList/IndexChart/',
+        url: '/StockAnalyser/IndexChart/',
         data: { 'symbol': symbol, "start": start, "end": end.toISOString() },
         dataType: 'json',
         success: function (response) {
@@ -381,7 +287,7 @@ function AddDataSet(symbol, start) {
 };
 
 function AddDataSetType(symbol, start, chartType) {
-    var url = '/CompanyList/' + chartType +'Chart';
+    var url = '/StockAnalyser/' + chartType +'Chart';
     chartColors = [
         "rgb(255, 99, 132)",
         "rgb(255, 159, 64)",

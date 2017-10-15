@@ -25,11 +25,11 @@ namespace Analise_Acoes_NICHOLAS
             services.AddDbContext<Analise_AcoesContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<Analise_AcoesContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<Analise_AcoesContext>()
+            //    .AddDefaultTokenProviders();
 
-            // Add application services.
+            //// Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
@@ -57,7 +57,7 @@ namespace Analise_Acoes_NICHOLAS
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=CompanyList}/{action=Index}/{id?}");
+                    template: "{controller=StockAnalyser}/{action=Index}/{id?}");
             });
         }
     }
