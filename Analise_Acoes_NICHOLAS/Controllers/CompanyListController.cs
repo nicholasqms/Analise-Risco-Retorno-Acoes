@@ -64,82 +64,33 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             var companySymbolVM = new CompanyListModel();
             companySymbolVM.SList = new SelectList(await symbolQuery.Distinct().ToListAsync());
             companySymbolVM.CompanyList = await companies.ToListAsync();
-            //ViewBag.CompanyList = JsonConvert.SerializeObject(auxiliar.CarregaListaPath("companylist.csv"),, new JavaScriptDateTimeConverter());
             ViewBag.CompanyList = JsonConvert.SerializeObject(companySymbolVM.CompanyList, new JavaScriptDateTimeConverter());
 
             return View(companySymbolVM);
         }
 
 
-
-
-        // GET Method to display the data in line chart model
-        // GET: /CompanyList/Charts/
-        public IActionResult Charts2(string Symbol, DateTime start, DateTime end)
-        {
-            Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
-
-            List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
-            //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
-
-            
-            List<DataPoint_Date> dataPoints = new List<DataPoint_Date> { };
-            for (int i = 0; i < Eod.Count; i++)
-            {
-                dataPoints.Add(
-                    new DataPoint_Date(Dates[i], Eod[i]));
-             }
-
-            ViewBag.symbol = Symbol;
-            ViewBag.Labels = JsonConvert.SerializeObject(Dates, new JavaScriptDateTimeConverter());
-            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            ViewBag.Data = JsonConvert.SerializeObject(Eod);
-            ViewBag.ChartType = "Closing Value";
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints,new JavaScriptDateTimeConverter());
-
-            return View("~/Views/CompanyList/Charts2.cshtml"); //View for Line chart with zooming
-            }
-
-
+        
         // GET Method to display the data in line chart model
         // GET: /CompanyList/CompareSymbols/
         public IActionResult CompareSymbols()
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
-            //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            //List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
             List<Company> CompanyList = auxiliar.CarregaLista("companylist.csv");
            
-            //List<DataPoint> dataPointsL = new List<DataPoint> { };
-            //for (int i = 0; i < Eod.Count; i++)
-            //{
-            //    dataPointsL.Add(
-            //        new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Eod[i]));
-            //}
-            //IQueryable<DataPoint> dataPoints = dataPointsL.AsQueryable();
 
             ViewBag.Company = CompanyList;
-            //ViewBag.symbol = Symbol;
-            //ViewBag.Start = Dates[0].ToString("yyyy-MM-dd");
-            //ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.ChartType = "Closing Value";
-            //ViewBag.DataPoints = dataPoints;
-            //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View(); //View for Line chart with zooming
         }
 
-        // GET Method to display the data in line chart model
         // GET: /CompanyList/Charts/
         public IActionResult ChartFeedback(string Symbol, DateTime start, DateTime end)
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
-            //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
             List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
             List<Double> FeedBack = auxiliar.GetStockFeedback(Symbol, start, end);
 
@@ -147,7 +98,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             for (int i = 0; i < FeedBack.Count; i++)
             {
                 dataPoints.Add(
-                    //new DataPoint((Double)Dates[i].DayOfYear, Eod[i]));
                     new DataPoint_Date(Dates[i], FeedBack[i]));
             }
             ViewBag.symbol = Symbol;
@@ -161,9 +111,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         public IActionResult ChartLogFeedback(string Symbol, DateTime start, DateTime end)
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
-
-            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
-            //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
             List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
             List<Double> FeedBack = auxiliar.GetLogFeedback(Symbol, start, end);
 
@@ -171,7 +118,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             for (int i = 0; i < FeedBack.Count; i++)
             {
                 dataPoints.Add(
-                    //new DataPoint((Double)Dates[i].DayOfYear, Eod[i]));
                     new DataPoint_Date(Dates[i], FeedBack[i]));
             }
             ViewBag.symbol = Symbol;
@@ -189,10 +135,35 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         {
             Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
             //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
-            var DataPoints = await auxiliary.GetDatapointsAsync(symbol,start,end);
+            var  DataPoints = await auxiliary.GetDatapointsAsync(symbol, start, end);            
             return DataPoints;
-        //    return ViewComponent("IndexChart", new { symbol = "PIH", start = DateTime.Today.AddMonths(-2), end = DateTime.Today });
-        }
-    }
-}
+         }
 
+        public async Task<IEnumerable<DataPoint>> LineChart(string symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
+            //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
+            var DataPoints = await auxiliary.GetDatapointsAsync(symbol, start, end);
+            return DataPoints;
+        }
+
+
+        public async Task<IEnumerable<DataPoint>> FeedbackChart(string symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
+            //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
+            var DataPoints = await auxiliary.GetFeedbackAsync(symbol, start, end);
+            return DataPoints;
+        }
+
+
+        public async Task<IEnumerable<DataPoint>> VolumeChart(string symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
+            //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
+            var DataPoints = await auxiliary.GetVolumeAsync(symbol, start, end);
+            return DataPoints;
+        }
+
+    }
+    }

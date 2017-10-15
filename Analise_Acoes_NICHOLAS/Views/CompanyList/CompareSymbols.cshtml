@@ -16,31 +16,37 @@
             display: none;
         }*/
     </style>
+    
 </head>
 <body>
-    <h1>@ViewBag.ChartType</h1>
+    <h1></h1>
     
-    <div id="firstInterface">
+    <div id="firstInterface" class="col-xs-4">
         Set the starting date for analysis : <input id="firstInput" class="form-control-sm" type="date" name="start" value="2017-08-01">
-        <button class="btn btn_default" onclick="ChangeStartButton()">Set</button>
+        <button class="btn btn_default" onclick="ChangeStartButton();$('#resetCanvasBtn').hide()">Set</button>
     </div>
     
-    <div id="secondInterface" class="user-interface">
+    <div id="secondInterface" class="col-xs-3">
         Analysys Period Start: <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue()" value="">        
-            <div id="chart-container" class="chart-container" style="height:60vh; width:80vw">
+            <div id="chart-container" class="chart-container" style="height:70vh; width:90vw">
                 <canvas id="myLineChart"></canvas>
             </div>
-        <select id="selectSymbol" onchange="ChangeValue()">
+        <select class="form-control-sm" id="selectSymbol" onchange="ChangeValue()">
             @foreach (var item in @ViewBag.Company)
             {
                 <option value="@item.Symbol">@item.Symbol</option>
             }
         </select>
-        <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart()">Start Chart</button>
+        <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">            
+            <option value="Line">Closing Value</option>
+            <option value="Feedback">Feedback</option>
+            <option value="Volume">Volume</option>
+        </select>
+        <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart();$('#selectChartType').hide()">Start Chart</button>
 
-        <button id="addDataset" class="btn btn_default" onclick="AddDataSet(selectedSymbol, start); myLineChart.update();">Add Dataset</button>
+        <button id="addDataset" class="btn btn_default" onclick="AddDataSetType(selectedSymbol, start, chartType); myLineChart.update();">Add Dataset</button>
         @*<button id="addDataset" class="btn btn_default" onclick="myLineChart.update();">Update Chart</button>*@
-        <button id="resetCanvasBtn" class="btn btn_default" onclick="ResetCanvas()"> Reset Canvas</button>
+        <button id="resetCanvasBtn" class="btn btn_default" onclick="ResetCanvas();$('#selectChartType').show()"> Reset Canvas</button>
     </div>
         <br>
         <br />
@@ -51,6 +57,11 @@
             start = "2017-08-01";
             var end = new Date();
             var canvasWasStarted = false;
+            var chartType = "Line";
+            var configType = 'line';
+
+            document.getElementById("selectChartType").value = chartType;
+            var url = '/CompanyList/' + chartType + 'Chart';
 
             function ChangeStartButton() {
                 $('#firstInterface').hide();
@@ -80,6 +91,19 @@
                 selectedSymbol = inputSelect.options[inputSelect.selectedIndex].value;
                 //alert(selectedSymbol);
             }
+
+            function ChangeChartType() {
+                var chartTypeSelect = document.getElementById("selectChartType");
+                chartType = chartTypeSelect.options[chartTypeSelect.selectedIndex].value;
+                if (chartType == 'Volume') {
+                    configType = 'bar';
+                }
+                else {
+                    configType = 'line';
+                }
+                //alert(chartType);
+            }
+            
             
             //function drawLineChartMultiple(selectedSymbol, start) {    //wwwroot/js/DrawChart.js
             var labels = [], data = [];
@@ -94,6 +118,7 @@
                 labels = [];
                 //config = [];
                 $('#myLineChart').remove();
+                $('#chart-container').hide();
                 $('#chart-container').append('<canvas id="myLineChart"></canvas>');
                 $('#myLineChart').hide();
                 // Instantiate a new chart
@@ -103,14 +128,13 @@
                 $("#startDatasetBtn").show();
 
             };
-
-
-
-            function StartChart () {
+                     
+            function StartChart() {
+                var url = '/CompanyList/' + chartType + 'Chart';
                 if (selectedSymbol != "") {
                     if (canvasWasStarted == false) {
                         jsonData = $.ajax({
-                            url: '/CompanyList/IndexChart/',
+                            url: url,//'/CompanyList/IndexChart/',
                             data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
                             dataType: 'json',
                             success: function (response) {
@@ -125,13 +149,13 @@
                                 }
                                 myLineChart.update();
 
-                                $("#chart-container").fadeIn(1000);
+                                //$("#chart-container").fadeIn(3000);
                             },
                         });
 
                         // Create the chart.js data structure using 'labels' and 'data'
                         config = {
-                            type: 'line',
+                            type: configType,
                             data: {
                                 labels: labels,
                                 datasets: [{
@@ -163,6 +187,7 @@
                         $('#startDatasetBtn').hide();
                         $("#resetCanvasBtn").show();
                         $("#myLineChart").fadeIn(2000);
+                        $('#chart-container').fadeIn(2000);
                     }
                     else if (canvasWasStarted == true)
                     {

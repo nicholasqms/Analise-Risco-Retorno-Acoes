@@ -104,6 +104,25 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
 
         }
 
+        public List<Double> YahooLoadVolume(string symbol, DateTime start, DateTime end)
+        {
+            while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
+            {
+                Token.Refresh();
+            }
+
+            List<HistoryPrice> hps = Historical.Get(symbol, start, end);
+            List<Double> VolumeSold = new List<double> { };
+            for (int i = 0; i < hps.Count; i++)
+            {
+               VolumeSold.Add(hps[i].Volume);
+            }
+
+            return VolumeSold;
+
+
+        }
+
         public List<DateTime> YahooLoadDates(string symbol, DateTime start, DateTime end)
         {
             while (string.IsNullOrEmpty(Token.Cookie) || string.IsNullOrEmpty(Token.Crumb))
@@ -173,6 +192,46 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
             });            
         }
 
+
+        public Task<IEnumerable<DataPoint>> GetFeedbackAsync(string symbol, DateTime start, DateTime end)
+        {
+            return Task.Run(() =>
+            {
+                List<Double> Feedback = GetStockFeedback(symbol, start, end);
+                List<DateTime> Dates = YahooLoadDates(symbol, start, end);
+
+
+                List<DataPoint> dataPointsL = new List<DataPoint> { };
+                for (int i = 0; i < Feedback.Count; i++)
+                {
+                    dataPointsL.Add(
+                        new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Feedback[i]));
+                }
+                IEnumerable<DataPoint> dataPoints = dataPointsL.AsEnumerable();
+
+                return dataPoints;
+            });
+        }
+
+        public Task<IEnumerable<DataPoint>> GetVolumeAsync(string symbol, DateTime start, DateTime end)
+        {
+            return Task.Run(() =>
+            {
+                List<Double> Volume = YahooLoadVolume(symbol, start, end);
+                List<DateTime> Dates = YahooLoadDates(symbol, start, end);
+
+
+                List<DataPoint> dataPointsL = new List<DataPoint> { };
+                for (int i = 0; i < Volume.Count; i++)
+                {
+                    dataPointsL.Add(
+                        new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Volume[i]));
+                }
+                IEnumerable<DataPoint> dataPoints = dataPointsL.AsEnumerable();
+
+                return dataPoints;
+            });
+        }
 
     }
 }

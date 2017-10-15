@@ -59,7 +59,9 @@
                         '</div>'
                     )).show();                   
                     //drawLineChart(data.Symbol);
-                    drawLineChartPeriod(data.Symbol,start);
+                    //drawFeedbackChartPeriod(data.Symbol, start);
+                    
+                    drawLineChartPeriod(data.Symbol, start);
                     tr.addClass('shown');
                 }                
             });
@@ -77,8 +79,9 @@
                         '<canvas id="myLineChart' + data.Symbol + '"></canvas>' +
                         '</div>'
                     )).show();
-                    //drawLineChart(data.Symbol);
-                    drawLineChartPeriod(data.Symbol, start);
+                    drawLineChart(data.Symbol);
+                    //drawFeedbackChartPeriod(data.Symbol, start);
+                    //drawLineChartPeriod(data.Symbol, start);
                     tr.addClass('shown');                    
                 }
                 //alert("The new start value is " + start);

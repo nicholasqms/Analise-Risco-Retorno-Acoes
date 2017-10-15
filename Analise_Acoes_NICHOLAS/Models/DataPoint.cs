@@ -10,6 +10,8 @@ namespace Analise_Acoes_NICHOLAS.Models
     [DataContract]
     public class DataPoint
     {
+        public DataPoint() {}
+
         public DataPoint(string x, double y)
         {
             this.date = x;
