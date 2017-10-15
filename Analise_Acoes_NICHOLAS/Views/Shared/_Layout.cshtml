@@ -20,7 +20,7 @@
         <script src="~/js/jquery.dataTables.min.js"></script>
         @* Chartjs.org script libraries *@
         <script src="~/js/Chart.min.js"></script>
-        <script src="~/js/utilsChartjs.js"></script>
+        <script src="~/js/Chartjs/utilsChartjs.js"></script>
         @**@
         <script src="~/js/DrawChart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
@@ -58,7 +58,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="CompanyList" asp-action="Index">Index</a></li>
-                    <li><a asp-area="" asp-controller="CompanyList" asp-action="BuscaCompany">Search Company</a></li>
+                    <li><a asp-area="" asp-controller="CompanyList" asp-action="CompareSymbols">Compare</a></li>
                 </ul>
                 @*@await Html.PartialAsync("_LoginPartial")*@
             </div>

@@ -36,15 +36,14 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             List<Company> CompanyList = auxiliar.CarregaLista("companylist.csv");            
             
             ViewBag.Company = CompanyList;
-            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            ViewBag.DataPoints = JsonConvert.SerializeObject(CompanyList);
+           // ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
             return View("~/Views/CompanyList/Index.cshtml");
         }
 
         //// GET: /CompanyList/Buscacompany
         public async Task<IActionResult> BuscaCompany(string companySymbol, string searchString)
         {
-            // Use LINQ to get list of genres.
+            // Use LINQ to get list of companies.
             IQueryable<string> symbolQuery = from m in _context.Company
                                              orderby m.Symbol
                                              select m.Symbol;
@@ -104,34 +103,33 @@ namespace Analise_Acoes_NICHOLAS.Controllers
 
 
         // GET Method to display the data in line chart model
-        // GET: /CompanyList/Charts/
-        public IActionResult Charts(string Symbol, DateTime start, DateTime end)
+        // GET: /CompanyList/CompareSymbols/
+        public IActionResult CompareSymbols()
         {
             Auxiliary auxiliar = new Auxiliary(); //Create instance to use auxiliary methods.
 
-            List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
+            //List<Double> Eod = auxiliar.YahooLoadData(Symbol, start, end);
             //List<DateTime> Dates = auxiliar.CarregaDatasYahooPeriod(Symbol, months);
-            List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
+            //List<DateTime> Dates = auxiliar.YahooLoadDates(Symbol, start, end);
+            List<Company> CompanyList = auxiliar.CarregaLista("companylist.csv");
+           
+            //List<DataPoint> dataPointsL = new List<DataPoint> { };
+            //for (int i = 0; i < Eod.Count; i++)
+            //{
+            //    dataPointsL.Add(
+            //        new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Eod[i]));
+            //}
+            //IQueryable<DataPoint> dataPoints = dataPointsL.AsQueryable();
 
-
-            List<DataPoint> dataPointsL = new List<DataPoint> { };
-            for (int i = 0; i < Eod.Count; i++)
-            {
-                dataPointsL.Add(
-                    new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Eod[i]));
-            }
-            IQueryable<DataPoint> dataPoints = dataPointsL.AsQueryable();
-
-            ViewBag.symbol = Symbol;
-            ViewBag.MaxValue = (int) dataPoints.Max(t => t.Y);
-            ViewBag.MinValue = (int) dataPoints.Min(t => t.Y);
-            ViewBag.Start = start.ToString("yyyy-MM-dd");
-            ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.Company = CompanyList;
+            //ViewBag.symbol = Symbol;
+            //ViewBag.Start = Dates[0].ToString("yyyy-MM-dd");
+            //ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.ChartType = "Closing Value";
-            ViewBag.DataPoints = dataPoints;
+            //ViewBag.DataPoints = dataPoints;
             //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
-            return View("~/Views/CompanyList/Charts.cshtml"); //View for Line chart with zooming
+            return View(); //View for Line chart with zooming
         }
 
         // GET Method to display the data in line chart model
