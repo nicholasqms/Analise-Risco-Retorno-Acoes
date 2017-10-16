@@ -213,6 +213,28 @@ namespace Analise_Acoes_NICHOLAS.AuxiliaryF
             });
         }
 
+        public Task<IEnumerable<DataPoint>> GetLogFeedbackAsync(string symbol, DateTime start, DateTime end)
+        {
+            return Task.Run(() =>
+            {
+                List<Double> Feedback = GetLogFeedback(symbol, start, end);
+                List<DateTime> Dates = YahooLoadDates(symbol, start, end);
+
+
+                List<DataPoint> dataPointsL = new List<DataPoint> { };
+                for (int i = 0; i < Feedback.Count; i++)
+                {
+                    dataPointsL.Add(
+                        new DataPoint(Dates[i].ToString("yyyy-MM-dd"), Feedback[i]));
+                }
+                IEnumerable<DataPoint> dataPoints = dataPointsL.AsEnumerable();
+
+                return dataPoints;
+            });
+        }
+
+
+
         public Task<IEnumerable<DataPoint>> GetVolumeAsync(string symbol, DateTime start, DateTime end)
         {
             return Task.Run(() =>

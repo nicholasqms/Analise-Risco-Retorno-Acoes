@@ -37,8 +37,9 @@
             }
         </select>
         <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">
-            <option value="Line">Closing Value</option>
+            <option value="Closing">Closing Value</option>
             <option value="Feedback">Feedback</option>
+            <option value="LogFeedback">LogFeedback</option>
             <option value="Volume">Volume</option>
         </select>
         <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart(); $('#selectChartType').hide();$('#addDataset').show()">Start Chart</button>
@@ -56,7 +57,7 @@
             start = "2017-08-01";
             var end = new Date();
             var canvasWasStarted = false;
-            var chartType = "Line";
+            var chartType = "Closing";
             var configType = 'line';
 
             document.getElementById("selectChartType").value = chartType;
@@ -169,7 +170,23 @@
                                     }
                                 },
                                 responsive: true,
-                                maintainAspectRatio: false
+                                maintainAspectRatio: false,
+                                scales: {
+                                    xAxes: [{
+                                        display: true,
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Date'
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        display: true,
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: chartType
+                                        }
+                                    }]
+                                }
                             }
                         };
 

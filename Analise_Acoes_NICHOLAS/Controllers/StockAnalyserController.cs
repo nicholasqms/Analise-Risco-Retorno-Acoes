@@ -40,36 +40,6 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             return View("~/Views/StockAnalyser/Index.cshtml");
         }
 
-        //// GET: /StockAnalyser/Buscacompany
-        public async Task<IActionResult> BuscaCompany(string companySymbol, string searchString)
-        {
-            // Use LINQ to get list of companies.
-            IQueryable<string> symbolQuery = from m in _context.Company
-                                             orderby m.Symbol
-                                             select m.Symbol;
-
-            var companies = from m in _context.Company
-                            select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                companies = companies.Where(s => s.Nome.Contains(searchString));
-            }
-
-            if (!String.IsNullOrEmpty(companySymbol))
-            {
-                companies = companies.Where(x => x.Symbol == companySymbol);
-            }
-
-            var companySymbolVM = new CompanyListModel();
-            companySymbolVM.SList = new SelectList(await symbolQuery.Distinct().ToListAsync());
-            companySymbolVM.CompanyList = await companies.ToListAsync();
-            ViewBag.CompanyList = JsonConvert.SerializeObject(companySymbolVM.CompanyList, new JavaScriptDateTimeConverter());
-
-            return View(companySymbolVM);
-        }
-
-
         
         // GET Method to display the data in line chart model
         // GET: /StockAnalyser/CompareSymbols/
@@ -95,7 +65,7 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             return DataPoints;
          }
 
-        public async Task<IEnumerable<DataPoint>> LineChart(string symbol, DateTime start, DateTime end)
+        public async Task<IEnumerable<DataPoint>> ClosingChart(string symbol, DateTime start, DateTime end)
         {
             Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
             //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
@@ -113,6 +83,14 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         }
 
 
+        public async Task<IEnumerable<DataPoint>> LogFeedbackChart(string symbol, DateTime start, DateTime end)
+        {
+            Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
+            //var DataPoints = await auxiliary.GetDatapointsAsync("PIH", DateTime.Today.AddMonths(-2), DateTime.Today);
+            var DataPoints = await auxiliary.GetLogFeedbackAsync(symbol, start, end);
+            return DataPoints;
+        }
+
         public async Task<IEnumerable<DataPoint>> VolumeChart(string symbol, DateTime start, DateTime end)
         {
             Auxiliary auxiliary = new Auxiliary(); //Create instance to use auxiliary methods.            
@@ -122,4 +100,4 @@ namespace Analise_Acoes_NICHOLAS.Controllers
         }
 
     }
-    }
+}
