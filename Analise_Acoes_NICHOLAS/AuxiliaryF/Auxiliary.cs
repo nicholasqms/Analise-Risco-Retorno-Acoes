@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Analise_Acoes_NICHOLAS.Models;
+using AnaliseAcoesNicholas.Models;
 
 
-namespace Analise_Acoes_NICHOLAS.AuxiliaryF
+namespace AnaliseAcoesNicholas.AuxiliaryF
 {            
 
     public class Auxiliary

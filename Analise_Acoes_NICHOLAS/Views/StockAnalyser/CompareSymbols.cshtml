@@ -20,39 +20,41 @@
 <body>
     <h1></h1>
 
-    <div id="firstInterface" class="col-xs-5">
-        Set the starting date for analysis : <input id="firstInput" class="form-control-sm" type="date" name="start" value="2017-08-01">
-        <button class="btn btn_default" onclick="ChangeStartButton(); $('#resetCanvasBtn').hide();">Set</button>
+    <div id="firstInterface" class="col-xs-8">
+        Set the starting date for analysis : <input id="firstInput" class="form-control-sm  form-inline" type="date" name="start" value="2017-08-01">
+        <button class="btn btn_default  form-inline" onclick="ChangeStartButton(); $('#resetCanvasBtn').hide();">Set</button>
     </div>
 
-    <div id="secondInterface" class="col-xs-4">
-        Analysys Period Start:
-        <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue();$('#selectChartType').show()" value="">
-        
-        <div id="chart-container" class="chart-container" style="height:70vh; width:85vw">
-            <canvas id="myLineChart"></canvas>
-        </div>
-        
-        <select class="form-control-sm" id="selectSymbol" onchange="ChangeValue();">
-            @foreach (var item in @ViewBag.Company)
+    <div id="secondInterface" class="form-group form-inline">
+        <div class="form-group form-inline">
+            Analysis Period Start:
+            <input id="startInput" class="form-control form-inline" type="date" name="start" onchange="ChangeStartValue();$('#selectChartType').show()" value="">
+
+            <select class="form-control-sm form-inline" id="selectSymbol" onchange="ChangeValue();">
+                @foreach (var item in @ViewBag.Company)
             {
-                <option value="@item.Symbol">@item.Symbol</option>
-            }
-        </select>
+                    <option value="@item.Symbol">@item.Symbol</option>
+                }
+            </select>
 
-        <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">
-            <option value="Closing">Closing Value</option>
-            <option value="Feedback">Feedback</option>
-            <option value="LogFeedback">LogFeedback</option>
-            <option value="Volume">Volume</option>
-            <option value="Histogram">Histogram</option>
-        </select>
-        
-        <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart(); $('#selectChartType').hide();$('#addDataset').show()">Start Chart</button>
+            <select class="form-control-sm form-inline" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">
+                <option value="Closing">Closing Value</option>
+                <option value="Feedback">Feedback</option>
+                <option value="LogFeedback">LogFeedback</option>
+                <option value="Volume">Volume</option>
+                <option value="Histogram">Histogram</option>
+            </select>
 
-        <button id="addDataset" class="btn btn_default" onclick="AddDataSetType(selectedSymbol, start, chartType); myLineChart.update();">Add Dataset</button>
-        
-        <button id="resetCanvasBtn" class="btn btn_default" onclick="ResetCanvas();$('#selectChartType').show()"> Reset Canvas</button>
+            <button id="startDatasetBtn" class="btn btn_default form-inline" onclick="StartChart(); $('#selectChartType').hide();$('#addDataset').show()">Start Chart</button>
+
+            <button id="addDataset" class="btn btn_default form-inline" onclick="AddDataSetType(selectedSymbol, start, chartType); myLineChart.update();">Add Dataset</button>
+
+            <button id="resetCanvasBtn" class="btn btn_default form-inline" onclick="ResetCanvas();$('#selectChartType').show()"> Reset Canvas</button>
+
+            <div id="chart-container" class="chart-container" style="height:70vh; width:85vw">
+                <canvas id="myLineChart"></canvas>
+            </div>
+        </div>
     </div>
     <br><br />
     

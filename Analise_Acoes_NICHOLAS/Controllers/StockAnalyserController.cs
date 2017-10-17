@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Analise_Acoes_NICHOLAS.Models;
-using Analise_Acoes_NICHOLAS.AuxiliaryF;
-using Analise_Acoes_NICHOLAS.Data;
+using AnaliseAcoesNicholas.Models;
+using AnaliseAcoesNicholas.AuxiliaryF;
+using AnaliseAcoesNicholas.Data;
 using System.Threading.Tasks;
-using Analise_Acoes_NICHOLAS.AsyncLoaders;
+using AnaliseAcoesNicholas.AsyncLoaders;
 
 
-namespace Analise_Acoes_NICHOLAS.Controllers
+namespace AnaliseAcoesNicholas.Controllers
 {
     public class StockAnalyserController : Controller
     {
@@ -19,11 +19,18 @@ namespace Analise_Acoes_NICHOLAS.Controllers
             _context = context;
         }
 
+
         // GET: /StockAnalyser/
         public IActionResult Index()
         {
             List<Company> CompanyList = Auxiliary.ListLoader("companylist.csv");            
             
+            if (CompanyList == null)
+            {
+                return Content("No company list was found on the server, please refer to the service's support.");
+            }
+
+
             ViewBag.Company = CompanyList;
             return View("~/Views/StockAnalyser/Index.cshtml");
         }

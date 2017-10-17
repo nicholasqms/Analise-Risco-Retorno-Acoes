@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 
-namespace Analise_Acoes_NICHOLAS.Models
+namespace AnaliseAcoesNicholas.Models
 {
     public class Company
     {

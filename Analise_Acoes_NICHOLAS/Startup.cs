@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Analise_Acoes_NICHOLAS.Data;
-using Analise_Acoes_NICHOLAS.Models;
-using Analise_Acoes_NICHOLAS.Services;
+using AnaliseAcoesNicholas.Data;
+using AnaliseAcoesNicholas.Models;
+using AnaliseAcoesNicholas.Services;
 
-namespace Analise_Acoes_NICHOLAS
+namespace AnaliseAcoesNicholas
 {
     public class Startup
     {
@@ -24,11 +24,7 @@ namespace Analise_Acoes_NICHOLAS
         {
             services.AddDbContext<Analise_AcoesContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<Analise_AcoesContext>()
-            //    .AddDefaultTokenProviders();
-
+            
             //// Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Analise_Acoes_NICHOLAS.Services
+namespace AnaliseAcoesNicholas.Services
 {
     public interface IEmailSender
     {

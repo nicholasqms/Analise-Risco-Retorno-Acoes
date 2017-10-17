@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Analise_Acoes_NICHOLAS": {
+    "AnaliseAcoesNicholas": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

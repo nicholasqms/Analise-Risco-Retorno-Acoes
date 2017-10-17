@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using YahooFinanceAPI;
 
-namespace Analise_Acoes_NICHOLAS.YahooFinance
+namespace AnaliseAcoesNicholas.YahooFinance
 {
     public class YahooFinanceF
     {

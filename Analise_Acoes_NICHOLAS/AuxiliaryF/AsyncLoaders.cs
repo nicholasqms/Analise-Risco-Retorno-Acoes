@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Analise_Acoes_NICHOLAS.Models;
-using Analise_Acoes_NICHOLAS.Operations;
-using Analise_Acoes_NICHOLAS.YahooFinance;
+using AnaliseAcoesNicholas.Models;
+using AnaliseAcoesNicholas.Operations;
+using AnaliseAcoesNicholas.YahooFinance;
 
-namespace Analise_Acoes_NICHOLAS.AsyncLoaders
+namespace AnaliseAcoesNicholas.AsyncLoaders
 {
     public class AsyncLoadersF
     {

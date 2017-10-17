@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using Analise_Acoes_NICHOLAS.AuxiliaryF;
-using Analise_Acoes_NICHOLAS.Data;
+using AnaliseAcoesNicholas.AuxiliaryF;
+using AnaliseAcoesNicholas.Data;
 using System.Collections.Generic;
 
-namespace Analise_Acoes_NICHOLAS.Models
+namespace AnaliseAcoesNicholas.Models
 {
     public static class DbInitializer
     {

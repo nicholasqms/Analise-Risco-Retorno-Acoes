@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace Analise_Acoes_NICHOLAS.Models
+namespace AnaliseAcoesNicholas.Models
 {
     //DataContract for Serializing Data - required to serve in JSON format
     [DataContract]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Analise_Acoes_NICHOLAS.Data
+namespace AnaliseAcoesNicholas.Data
 {
     public class Analise_AcoesContext : DbContext
     {
@@ -13,8 +13,8 @@ namespace Analise_Acoes_NICHOLAS.Data
         {
         }
 
-        public DbSet<Analise_Acoes_NICHOLAS.Models.Company> Company{ get; set; }
-        public DbSet<Analise_Acoes_NICHOLAS.Models.Company> CompanyListModel { get; set; }
+        public DbSet<AnaliseAcoesNicholas.Models.Company> Company{ get; set; }
+        public DbSet<AnaliseAcoesNicholas.Models.Company> CompanyListModel { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Analise_Acoes_NICHOLAS.Models
+namespace AnaliseAcoesNicholas.Models
 {
     public class ErrorViewModel
     {

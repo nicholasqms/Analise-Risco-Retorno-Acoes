@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Analise_Acoes_NICHOLAS.YahooFinance;
+using AnaliseAcoesNicholas.YahooFinance;
 
-namespace Analise_Acoes_NICHOLAS.Operations
+namespace AnaliseAcoesNicholas.Operations
 {
     public class OperationsF
     {

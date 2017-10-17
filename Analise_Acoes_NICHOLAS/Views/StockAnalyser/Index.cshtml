@@ -1,4 +1,4 @@
-﻿@model Analise_Acoes_NICHOLAS.Models.Company
+﻿@model AnaliseAcoesNicholas.Models.Company
 
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +19,7 @@
                         "className": 'chart-Show',
                         "orderable": false,
                         "data": null,
-                        "defaultContent": '+',
+                        "defaultContent": '<span style="text-align:center;display:block"><i class="fa fa-plus-circle" aria-hidden="true" "></i></span>',
                         "sorting": 'disabled',
                     },
                     { "data":  "@Html.DisplayNameFor(model => model.Symbol)" },
@@ -79,11 +79,6 @@
                 }
             });
         });
-        $(window).load(function () {
-            // When the page has loaded
-            $("body").fadeIn(500);
-            
-        });
     </script>
     <style> 
         body {
@@ -93,9 +88,10 @@
 
 </head>
 <body>
-    Start Date: <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue()">
-    
-              <table id="indexTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <div class="form-group form-inline">
+    Start Date: <input id="startInput" class="form-control control-label" type="date" name="start" onchange="ChangeStartValue()">
+    </div>
+              <table id="indexTable" class="table table-striped table-bordered" cellspacing="0" width="100%" >
                 <thead>
                     <tr>
                         <th></th>
@@ -146,5 +142,21 @@
             }
         }
     }
-</script>
+    $(window).load(function () {
+        // When the page has loaded
+        $("body").fadeIn(500);
+        
+    });
+    $(document).ready(function () {
+
+        document.getElementById("indexTable_length").classList.add("form-group");
+        document.getElementById("indexTable_length").classList.add("form-inline");
+        elements = document.getElementsByName("indexTable_length");
+        elements[0].classList.add("form-control");
+        elements[0].classList.add("control-label");
+        document.getElementById("indexTable_filter").classList.add("form-group");
+        document.getElementById("indexTable_filter").classList.add("form-inline");
+
+    });
+    </script>
 </body>

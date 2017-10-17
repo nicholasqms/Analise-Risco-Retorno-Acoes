@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace Analise_Acoes_NICHOLAS.Migrations
+namespace AnaliseAcoesNicholas.Migrations
 {
     public partial class Inicial : Migration
     {

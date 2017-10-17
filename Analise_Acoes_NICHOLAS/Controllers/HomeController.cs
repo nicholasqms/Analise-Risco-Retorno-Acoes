@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Analise_Acoes_NICHOLAS.Models;
+using AnaliseAcoesNicholas.Models;
 
-namespace Analise_Acoes_NICHOLAS.Controllers
+namespace AnaliseAcoesNicholas.Controllers
 {
     public class HomeController : Controller
     {

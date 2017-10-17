@@ -32,16 +32,6 @@ div.chart-container {
     display: none;
 }
 
-td.chart-Show {
-    background: url('../../wwwroot/images/details_open.png') no-repeat center center;
-
-    cursor: pointer;
-}
-
-tr.shown td.chart-Show {
-    background: url('../../wwwroot/images/details_close.png') no-repeat center center;
-}
-
 .btn-default {
     color: #333333;
     background-color: #ffffff;
