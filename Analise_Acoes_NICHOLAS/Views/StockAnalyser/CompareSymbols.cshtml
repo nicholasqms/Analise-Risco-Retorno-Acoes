@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Compare";
+    ViewData["Title"] = "Compare Symbols";
 }
 <!DOCTYPE html>
 <html>
@@ -20,238 +20,234 @@
 <body>
     <h1></h1>
 
-    <div id="firstInterface" class="col-xs-4">
+    <div id="firstInterface" class="col-xs-5">
         Set the starting date for analysis : <input id="firstInput" class="form-control-sm" type="date" name="start" value="2017-08-01">
         <button class="btn btn_default" onclick="ChangeStartButton(); $('#resetCanvasBtn').hide();">Set</button>
     </div>
 
     <div id="secondInterface" class="col-xs-4">
-        Analysys Period Start: <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue();$('#selectChartType').show()" value="">
+        Analysys Period Start:
+        <input id="startInput" class="form-control-sm" type="date" name="start" onchange="ChangeStartValue();$('#selectChartType').show()" value="">
+        
         <div id="chart-container" class="chart-container" style="height:70vh; width:85vw">
             <canvas id="myLineChart"></canvas>
         </div>
+        
         <select class="form-control-sm" id="selectSymbol" onchange="ChangeValue();">
             @foreach (var item in @ViewBag.Company)
             {
                 <option value="@item.Symbol">@item.Symbol</option>
             }
         </select>
+
         <select class="form-control-sm col-xs-1" id="selectChartType" onchange="ChangeChartType()" style="display:inline-block">
             <option value="Closing">Closing Value</option>
             <option value="Feedback">Feedback</option>
             <option value="LogFeedback">LogFeedback</option>
             <option value="Volume">Volume</option>
+            <option value="Histogram">Histogram</option>
         </select>
+        
         <button id="startDatasetBtn" class="btn btn_default" onclick="StartChart(); $('#selectChartType').hide();$('#addDataset').show()">Start Chart</button>
 
         <button id="addDataset" class="btn btn_default" onclick="AddDataSetType(selectedSymbol, start, chartType); myLineChart.update();">Add Dataset</button>
         
         <button id="resetCanvasBtn" class="btn btn_default" onclick="ResetCanvas();$('#selectChartType').show()"> Reset Canvas</button>
     </div>
-    <br>
-    <br />
+    <br><br />
+    
     <script>
+        var start = new Date();
+        start = start.toISOString().split('T')[0];
+        start = "2017-08-01";
+        var end = new Date();
+        var canvasWasStarted = false;
+        var chartType = "Closing";
+        var configType = 'line';
 
-            var start = new Date();
-            start = start.toISOString().split('T')[0];
-            start = "2017-08-01";
-            var end = new Date();
-            var canvasWasStarted = false;
-            var chartType = "Closing";
-            var configType = 'line';
+        document.getElementById("selectChartType").value = chartType;
+        var url = '/StockAnalyser/' + chartType + 'Chart';
 
-            document.getElementById("selectChartType").value = chartType;
-            var url = '/StockAnalyser/' + chartType + 'Chart';
-
-            function ChangeStartButton() {
-                $('#firstInterface').hide();
-                $("#secondInterface").fadeIn(1000);
-                $('#addDataset').hide();
-                ChangeStartValue(document.getElementById("firstInput").value);
+        function ChangeStartButton() {                
+            $('#firstInterface').hide();
+            $("#secondInterface").fadeIn(1000);
+            $('#addDataset').hide();
+            ChangeStartValue(document.getElementById("firstInput").value);
+            document.getElementById("startInput").value = start;
+            if (Date.parse(start) > end) {
+                alert("Starting date can't be past today's date.")
+                start = new Date();
+                start.setMonth(8);
+                start = start.toISOString().split('T')[0];
                 document.getElementById("startInput").value = start;
             }
+        }
 
 
 
-            function ChangeStartValue(date) {
-                if (canvasWasStarted == true) {
-                    ResetCanvas();
-                }
-                if (date != null) {
-                    start = date;
-                }
-                else {
-                    start = document.getElementById("startInput").value;
-                    }
-                //alert(start);
+        function ChangeStartValue(date)
+        {
+            if (canvasWasStarted == true)
+            {
+                ResetCanvas();
             }
-
-            var selectedSymbol = "@ViewBag.Company[0].Symbol";
-            function ChangeValue() {
-                var inputSelect = document.getElementById("selectSymbol");
-                selectedSymbol = inputSelect.options[inputSelect.selectedIndex].value;
-                //alert(selectedSymbol);
+            if (date != null)
+            {
+                start = date;
             }
-
-            function ChangeChartType() {
-                var chartTypeSelect = document.getElementById("selectChartType");
-                chartType = chartTypeSelect.options[chartTypeSelect.selectedIndex].value;
-                if (chartType == 'Volume') {
-                    configType = 'bar';
+            else
+            {
+                start = document.getElementById("startInput").value;
+                if (Date.parse(start) > end)
+                {
+                    alert("Starting date can't be past today's date.")
+                    start = new Date();
+                    start.setMonth(8);
+                    start = start.toISOString().split('T')[0];
+                    document.getElementById("startInput").value = start;
                 }
-                else {
-                    configType = 'line';
-                }
-                //alert(chartType);
             }
+        }
 
-            var labels = [], data = [];
-            var DataPoints = [];
-            var jsonData;
-            var config;
-            var myLineChart, ctx;
+        var selectedSymbol = "@ViewBag.Company[0].Symbol";
+        function ChangeValue() {
+            var inputSelect = document.getElementById("selectSymbol");
+            selectedSymbol = inputSelect.options[inputSelect.selectedIndex].value;
+        }
 
-            function ResetCanvas() {
-                data = [];
-                labels = [];
-                $('#myLineChart').remove();
-                $('#chart-container').hide();
-                $('#chart-container').append('<canvas id="myLineChart"></canvas>');
-                $('#myLineChart').hide();
-                // Instantiate a new chart
-                ctx = document.getElementById("myLineChart").getContext("2d");
-                canvasWasStarted = false; // Reset the flag
-                $('#resetCanvasBtn').hide();
-                $("#startDatasetBtn").show();
-                $('#addDataset').hide();
-            };
+        function ChangeChartType() {
+            var chartTypeSelect = document.getElementById("selectChartType");
+            chartType = chartTypeSelect.options[chartTypeSelect.selectedIndex].value;
+            if (chartType == 'Volume' || chartType == 'Histogram') {
+                configType = 'bar';
+            }
+            else {
+                configType = 'line';
+            }
+        }
 
-            function StartChart() {
-                var url = '/StockAnalyser/' + chartType + 'Chart';
-                if (selectedSymbol != "") {
-                    if (canvasWasStarted == false) {
-                        jsonData = $.ajax({
-                            url: url,//'/StockAnalyser/IndexChart/',
-                            data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
-                            dataType: 'json',
-                            success: function (response) {
-                                for (i in response) {
-                                    DataPoints[i] = (response[i]);
-                                }
+        var labels = [], data = [];
+        var dataPoints = [];
+        var jsonData;
+        var config;
+        var myLineChart, ctx;
 
-                                // Split labels and data into separate arrays
-                                for (i in DataPoints) {
-                                    labels.push(DataPoints[i].x);
-                                    data.push(DataPoints[i].y);
-                                }
-                                myLineChart.update();
+        function ResetCanvas() {
+            //Reset the list variables
+            dataPoints = [];
+            data = [];                
+            setConfig();                
+            labels = [];            
+            $('#myLineChart').remove();
+            $('#chart-container').hide();
+            $('#chart-container').append('<canvas id="myLineChart"></canvas>');
+            $('#myLineChart').hide();
+            // Instantiate a new chart
+            ctx = document.getElementById("myLineChart").getContext("2d");
+            canvasWasStarted = false; // Reset the flag
+            $('#resetCanvasBtn').hide();
+            $("#startDatasetBtn").show();
+            $('#addDataset').hide();
+        };
 
-                                //$("#chart-container").fadeIn(3000);
-                            },
-                        });
-
-                        // Create the chart.js data structure using 'labels' and 'data'
-                        config = {
-                            type: configType,
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: selectedSymbol,
-                                    bordercolor: 'rgb(54, 162, 235)',
-                                    backgroundColor: 'rgb(54, 162, 235)',
-                                    fill: false,
-                                    data: data,
-                                }],
-                            },
-                            options: {
-                                elements: {
-                                    line: {
-                                        tension: 0,
-                                    }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    xAxes: [{
-                                        display: true,
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: 'Date'
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        display: true,
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: chartType
-                                        }
-                                    }]
-                                }
+        function StartChart()
+        {                
+            var url = '/StockAnalyser/' + chartType + 'Chart'; //Construct the controller url
+            if (selectedSymbol != "")
+            {
+                if (canvasWasStarted == false)
+                {
+                    jsonData = $.ajax({
+                        url: url,//'/StockAnalyser/ClosingChart/',
+                        data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
+                        dataType: 'json',
+                        success: function (response)
+                        {
+                            for (i in response)
+                            {
+                                dataPoints[i] = (response[i]);
                             }
-                        };
+                                
+                            // Split labels and data into separate arrays
+                            for (i in dataPoints)
+                            {
+                                labels.push(dataPoints[i].x);
+                                data.push(dataPoints[i].y);                                    
+                            }
+                            myLineChart.update();
+                            $("#myLineChart").fadeIn(2000);
+                            $('#chart-container').fadeIn(2000);
+                        },
+                    });
+                    setConfig();
+                    // Get the context of the canvas element we want to select
+                    ctx = document.getElementById("myLineChart").getContext("2d");
 
-                        // Get the context of the canvas element we want to select
-                        ctx = document.getElementById("myLineChart").getContext("2d");
+                    // Instantiate a new chart
+                    myLineChart = new Chart(ctx, config);
+                    myLineChart.update();
+                    canvasWasStarted = true;
+                    $('#startDatasetBtn').hide();
+                    $("#resetCanvasBtn").show();
+                }
+            }
+        }
 
-                        // Instantiate a new chart
-                        myLineChart = new Chart(ctx, config);
-                        myLineChart.update();
-                        canvasWasStarted = true;
-                        $('#startDatasetBtn').hide();
-                        $("#resetCanvasBtn").show();
-                        $("#myLineChart").fadeIn(2000);
-                        $('#chart-container').fadeIn(2000);
-                    }
-                    else if (canvasWasStarted == true)
+        // Create the chart.js data structure using 'labels' and 'data'
+        function setConfig()
+        {
+            config =
+            {
+                type: configType,
+                data:
+                {
+                    labels: labels,
+                    datasets: [
                     {
-                        jsonData = $.ajax({
-                            url: '/StockAnalyser/IndexChart/',
-                            data: { 'symbol': selectedSymbol, "start": start, "end": end.toISOString() },
-                            dataType: 'json',
-                            success: function (response) {
-                                for (i in response) {
-                                    DataPoints[i] = (response[i]);
-                                }
-
-                                // Split labels and data into separate arrays
-                                for (i in DataPoints) {
-                                    labels.unshift(DataPoints[i].x);
-                                    data.unshift(DataPoints[i].y);
-                                }
-                                myLineChart.update();
-
-                                $("#chart-container").fadeIn(1000);
-                            },
-                        });
-
-                        // Create the chart.js data structure using 'labels' and 'data'
-                        config = {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: selectedSymbol,
-                                    bordercolor: 'rgb(54, 162, 235)',
-                                    backgroundColor: 'rgb(54, 162, 235)',
-                                    fill: false,
-                                    data: data,
-                                }],
-                            },
-                            options: {
-                                elements: {
-                                    line: {
-                                        tension: 0,
-                                    }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false
+                        label: selectedSymbol,
+                        bordercolor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgb(54, 162, 235)',
+                        fill: false,
+                        data: data,
+                    }],
+                },
+                options:
+                {
+                    elements:
+                    {
+                        line:
+                        {
+                            tension: 0,
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales:
+                    {
+                        xAxes: [
+                            {
+                            display: true,
+                            scaleLabel:
+                            {
+                                display: true,
+                                labelString: 'Date'
                             }
-                        };
-                        myLineChart.update();
+                        }],
+                        yAxes: [
+                        {
+                            display: true,
+                            scaleLabel:
+                            {
+                                display: true,
+                                labelString: chartType
+                            }
+                        }]
                     }
                 }
             }
+        }
 
     </script>
+
 </body>
 </html>
